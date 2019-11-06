@@ -5,8 +5,8 @@ These methods extend the event body of every event sent through `recordEvent()` 
 `extendEvents` transforms will be applied first, followed by collection-specific `extendEvent` transforms. In either case, transforms will be applied in the order that they are defined. Properties provided in the originating `recordEvent/s()` call will override any matching properties (static or dynamic) returned by these methods.
 
 ```javascript
-import KeenTracking from 'keen-tracking';
-const client = new KeenTracking({ /*configure*/ });
+import PCTracking from 'pc-tracking';
+const client = new PCTracking({ /*configure*/ });
 // Extend events for a single collection
 client.extendEvent('transaction', {});
 client.extendEvent('transaction', () => {
@@ -38,10 +38,10 @@ client.extendEvents({
   'user': userProps
 });
 
-// Include a dynamic 'keen.timestamp' property with every event
+// Include a dynamic 'pc.timestamp' property with every event
 client.extendEvents(() => {
   return {
-    keen: {
+    pc: {
       timestamp: new Date().toISOString()
     }
   };
@@ -51,8 +51,8 @@ client.extendEvents(() => {
 **Example usage:**
 
 ```javascript
-import KeenTracking from 'keen-tracking';
-const client = new KeenTracking({ /*configure*/ });
+import PCTracking from 'pc-tracking';
+const client = new PCTracking({ /*configure*/ });
 
 // Object (static)
 client.extendEvents({
@@ -67,7 +67,7 @@ client.extendEvents({
 // Useful for attaching time-sensitive data
 client.extendEvents(() => {
   return {
-    keen: {
+    pc: {
       timestamp: new Date().toISOString()
     }
   }
@@ -83,7 +83,7 @@ client.recordEvent('pageviews');
     id: 'f1233423h',
     username: 'someuser123'
   },
-  keen: {
+  pc: {
     timestamp: '2015-06-28T22:01:38.824Z'
   }
 }

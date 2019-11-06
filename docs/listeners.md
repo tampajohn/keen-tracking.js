@@ -1,16 +1,16 @@
 # DOM Listeners
 
-`KeenTracking.utils.listener()` helps surface common DOM element events like "click", "scroll", and "submit". There is also a `KeenTracking.listenTo()` method for quickly setting a series of listeners (below)
+`PCTracking.utils.listener()` helps surface common DOM element events like "click", "scroll", and "submit". There is also a `PCTracking.listenTo()` method for quickly setting a series of listeners (below)
 
 **Important:** Form submits and clicks will be delayed by 500ms, unless the event is cancelled within a given listener's callback.
 
 ```javascript
-import KeenTracking from 'keen-tracking';
+import PCTracking from 'pc-tracking';
 
 // Listen to DOM events
 
 // Create a new element listener (assigned)
-const navLinks = KeenTracking.utils.listener('.nav li > a');
+const navLinks = PCTracking.utils.listener('.nav li > a');
 
 // Listen for a given event
 navLinks.on('click', (e) => {
@@ -36,7 +36,7 @@ myClicker.off('click');
 myClicker.off();
 
 
-const formListener = KeenTracking.utils.listener('form#signup');
+const formListener = PCTracking.utils.listener('form#signup');
 formListener.on('submit', (e) => {
   return client.recordEvent('signup', {
     // record signup data
@@ -45,14 +45,14 @@ formListener.on('submit', (e) => {
 });
 ```
 
-### KeenTracking.listenTo()
+### PCTracking.listenTo()
 
-This is a convenience function for quickly creating multiple listeners. These listeners are constructed with the `KeenTracking.utils.listener` utility, so the behavior will be identical to calling `KeenTracking.utils.listener(selector).on(eventType, callback);`.
+This is a convenience function for quickly creating multiple listeners. These listeners are constructed with the `PCTracking.utils.listener` utility, so the behavior will be identical to calling `PCTracking.utils.listener(selector).on(eventType, callback);`.
 
 ```javascript
-import KeenTracking from 'keen-tracking';
+import PCTracking from 'pc-tracking';
 
-KeenTracking.listenTo({
+PCTracking.listenTo({
   'click .nav li > a': (e) => {
     // record signup data
     return client.recordEvent('signup', {
@@ -71,10 +71,10 @@ KeenTracking.listenTo({
 This technique does not return a reference to the listener, but can be deactivated by defining a listener with the same selector and calling the `.off(eventType)` event:
 
 ```JavaScript
-import KeenTracking from 'keen-tracking';
+import PCTracking from 'pc-tracking';
 
-KeenTracking.utils.listener('.nav li > a').off('click');
-KeenTracking.utils.listener('form#signup').off('submit');
+PCTracking.utils.listener('.nav li > a').off('click');
+PCTracking.utils.listener('form#signup').off('submit');
 ```
 
 
@@ -89,9 +89,9 @@ To capture events from anchor tags that contain nested elements, such as `<img>`
 ```
 
 ```javascript
-import KeenTracking from 'keen-tracking';
+import PCTracking from 'pc-tracking';
 
-KeenTracking.utils.listener('a.my-btn, a.my-btn *').on('click', (e) => {
+PCTracking.utils.listener('a.my-btn, a.my-btn *').on('click', (e) => {
   return client.recordEvent('signup', {
     // record signup data
   });
@@ -102,9 +102,9 @@ KeenTracking.utils.listener('a.my-btn, a.my-btn *').on('click', (e) => {
 ### Window events
 
 ```javascript
-import KeenTracking from 'keen-tracking';
+import PCTracking from 'pc-tracking';
 
-const winListener = KeenTracking.utils.listener('window')
+const winListener = PCTracking.utils.listener('window')
   .once('scroll', (e) => {
     // user is interacting with the page
   })

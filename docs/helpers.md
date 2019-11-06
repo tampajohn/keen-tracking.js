@@ -4,14 +4,14 @@ These helpers are designed to generate useful properties and objects for event d
 
 ### Datetime index
 
-`KeenTracking.utils.helpers.getDatetimeIndex()` returns a set of properties like "hour_of_day" or "day_of_month". This helper accepts an optional `Date` object as an argument, otherwise it will construct and return a datetime index object based on "now".
+`PCTracking.utils.helpers.getDatetimeIndex()` returns a set of properties like "hour_of_day" or "day_of_month". This helper accepts an optional `Date` object as an argument, otherwise it will construct and return a datetime index object based on "now".
 
-This helper works with a new `Date` object, and therefore the value returned is localized and not UTC. [Read more about this issue here](https://github.com/keen/keen-tracking.js/issues/49).
+This helper works with a new `Date` object, and therefore the value returned is localized and not UTC. [Read more about this issue here](https://github.com/pc/pc-tracking.js/issues/49).
 
 ```javascript
-import KeenTracking from 'keen-tracking';
+import PCTracking from 'pc-tracking';
 
-const datetimeIndex = KeenTracking.helpers.getDatetimeIndex();
+const datetimeIndex = PCTracking.helpers.getDatetimeIndex();
 /*
 // Monday, June 29th, 2015
 {
@@ -26,10 +26,10 @@ const datetimeIndex = KeenTracking.helpers.getDatetimeIndex();
 
 #### UTC datetime index
 
-Create and pass a UTC `Date` object into `KeenTracking.helpers.getDatetimeIndex()` to include a UTC datetime index with your event data model.
+Create and pass a UTC `Date` object into `PCTracking.helpers.getDatetimeIndex()` to include a UTC datetime index with your event data model.
 
 ```javascript
-import KeenTracking from 'keen-tracking';
+import PCTracking from 'pc-tracking';
 
 const now = new Date();
 const utc = new Date(
@@ -41,7 +41,7 @@ const utc = new Date(
   now.getUTCSeconds(),
   now.getUTCMilliseconds()
 );
-const utcDatetimeIndex = KeenTracking.helpers.getDatetimeIndex(utc);
+const utcDatetimeIndex = PCTracking.helpers.getDatetimeIndex(utc);
 /*
 // Monday, June 29th, 2015
 {
@@ -57,30 +57,30 @@ const utcDatetimeIndex = KeenTracking.helpers.getDatetimeIndex(utc);
 
 ### Unique ID
 
-`KeenTracking.helpers.getUniqueId()` returns a UUID. This is useful in conjunction with `KeenTracking.utils.cookie()` for identifying and tracking unauthenticated site visitors.
+`PCTracking.helpers.getUniqueId()` returns a UUID. This is useful in conjunction with `PCTracking.utils.cookie()` for identifying and tracking unauthenticated site visitors.
 
 ```javascript
-import KeenTracking from 'keen-tracking';
+import PCTracking from 'pc-tracking';
 
-const uniqueId = KeenTracking.helpers.getUniqueId();
+const uniqueId = PCTracking.helpers.getUniqueId();
 // '150caf6b-ef9f-48cd-ae32-43e2f5bb0fe8'
 ```
 
 ### DOM node path
 
-`KeenTracking.helpers.getDomNodePath(el)` returns the xPath for a given DOM element.
+`PCTracking.helpers.getDomNodePath(el)` returns the xPath for a given DOM element.
 
 ```javascript
-import KeenTracking from 'keen-tracking';
+import PCTracking from 'pc-tracking';
 
 const btn = document.getElementById('signup-button');
-const domNodePath = KeenTracking.helpers.getDomNodePath(btn);
+const domNodePath = PCTracking.helpers.getDomNodePath(btn);
 // 'body > div#nav > ul > li:eq(1) > a#signup-button'
 ```
 
 ### DOM node profile
 
-`KeenTracking.helpers.getDomNodeProfile(el)` returns an object of properties profiling a given DOM node.
+`PCTracking.helpers.getDomNodeProfile(el)` returns an object of properties profiling a given DOM node.
 
 ```HTML
 <a
@@ -92,10 +92,10 @@ const domNodePath = KeenTracking.helpers.getDomNodePath(btn);
 ```
 
 ```javascript
-import KeenTracking from 'keen-tracking';
+import PCTracking from 'pc-tracking';
 
 const btn = document.getElementById('signup-button');
-const domNodeProfile = KeenTracking.helpers.getDomNodeProfile(btn);
+const domNodeProfile = PCTracking.helpers.getDomNodeProfile(btn);
 
 /*
 {
@@ -117,12 +117,12 @@ const domNodeProfile = KeenTracking.helpers.getDomNodeProfile(btn);
 
 ### Screen profile
 
-`KeenTracking.helpers.getScreenProfile()` returns a set of properties describing the current device screen, like "height", "availHeight", and "orientation".
+`PCTracking.helpers.getScreenProfile()` returns a set of properties describing the current device screen, like "height", "availHeight", and "orientation".
 
 ```javascript
-import KeenTracking from 'keen-tracking';
+import PCTracking from 'pc-tracking';
 
-const screenProfile = KeenTracking.helpers.getScreenProfile();
+const screenProfile = PCTracking.helpers.getScreenProfile();
 /*
 {
   height: 900,
@@ -141,12 +141,12 @@ const screenProfile = KeenTracking.helpers.getScreenProfile();
 
 ### Window profile
 
-`KeenTracking.helpers.getWindowProfile()` returns a set of properties describing the current window, like "height", "scrollHeight", and "ratio" to screen dimensions.
+`PCTracking.helpers.getWindowProfile()` returns a set of properties describing the current window, like "height", "scrollHeight", and "ratio" to screen dimensions.
 
 ```javascript
-import KeenTracking from 'keen-tracking';
+import PCTracking from 'pc-tracking';
 
-const windowProfile = KeenTracking.helpers.getWindowProfile();
+const windowProfile = PCTracking.helpers.getWindowProfile();
 /*
 {
   height: 436,
@@ -162,12 +162,12 @@ const windowProfile = KeenTracking.helpers.getWindowProfile();
 
 ### Browser profile
 
-`KeenTracking.helpers.getBrowserProfile()` returns a set of properties describing the current browser, like "useragent", "online" status, and "language", plus [screen](#screen-profile) and [window](#window-profile) profiles.
+`PCTracking.helpers.getBrowserProfile()` returns a set of properties describing the current browser, like "useragent", "online" status, and "language", plus [screen](#screen-profile) and [window](#window-profile) profiles.
 
 ```javascript
-import KeenTracking from 'keen-tracking';
+import PCTracking from 'pc-tracking';
 
-const browserProfile = KeenTracking.helpers.getBrowserProfile();
+const browserProfile = PCTracking.helpers.getBrowserProfile();
 /*
 {
   cookies: true,
@@ -179,7 +179,7 @@ const browserProfile = KeenTracking.helpers.getBrowserProfile();
   useragent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36',
   version: '5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36',
 
-  // includes KeenTracking.helpers.getScreenProfile();
+  // includes PCTracking.helpers.getScreenProfile();
 	screen: {
     height: 900,
     width: 1440,
@@ -193,7 +193,7 @@ const browserProfile = KeenTracking.helpers.getBrowserProfile();
     }
   },
 
-  // includes KeenTracking.helpers.getWindowProfile();
+  // includes PCTracking.helpers.getWindowProfile();
   window: {
 	  height: 436,
     width: 1209,
@@ -209,12 +209,12 @@ const browserProfile = KeenTracking.helpers.getBrowserProfile();
 
 ### Scroll State
 
-`KeenTracking.helpers.getScrollState()` returns an object of properties profiling the current scroll state. This lets you measure how much of a page a user has viewed before taking a recorded action.
+`PCTracking.helpers.getScrollState()` returns an object of properties profiling the current scroll state. This lets you measure how much of a page a user has viewed before taking a recorded action.
 
 ```javascript
-import KeenTracking from 'keen-tracking';
+import PCTracking from 'pc-tracking';
 
-const scrollState = KeenTracking.helpers.getScrollState();
+const scrollState = PCTracking.helpers.getScrollState();
 /*
 {
   pixel: 900,

@@ -3,7 +3,7 @@
 .git*
 *.log
 *.md
-.awspublish-keen-js
+.awspublish-pc-js
 
 bower.json
 .babelrc

@@ -1,12 +1,12 @@
 {
-  "name": "keen-tracking",
-  "main": "dist/keen-tracking.js",
-  "homepage": "https://github.com/keen/keen-tracking.js",
+  "name": "pc-tracking",
+  "main": "dist/pc-tracking.js",
+  "homepage": "https://github.com/tampajohn/pc-tracking.js",
   "authors": [
-    "Dustin Larimer <dustin@keen.io>",
-    "Joe Wegner <joe@keen.io>",
-    "Eric Anderson <eric@keen.io>",
-    "Alex Kleissner <alex@keen.io>"
+    "Dustin Larimer <dustin@pc.io>",
+    "Joe Wegner <joe@pc.io>",
+    "Eric Anderson <eric@pc.io>",
+    "Alex Kleissner <alex@pc.io>"
   ],
   "license": "MIT",
   "keywords": [
@@ -16,9 +16,9 @@
     "logging",
     "stats",
     "pageviews",
-    "keen",
-    "keen.io",
-    "keen-io"
+    "pc",
+    "pc.io",
+    "pc-io"
   ],
   "ignore": [
     "**/.*",
@@ -33,7 +33,7 @@
     "test",
     "bower_components"
   ],
-  "description": "Data Collection SDK for Keen IO",
+  "description": "Data Collection SDK for PC IO",
   "moduleType": [
     "amd",
     "globals",

@@ -1,13 +1,13 @@
 # Defer Events
 
-These methods handle an internal queue of events, which is pushed to the [events](https://keen.io/docs/api/#record-multiple-events) API resource on a given interval (default: 15 seconds), or when the queue reaches a maximum capacity (default: 5000 events).
+These methods handle an internal queue of events, which is pushed to the [events](https://pc.io/docs/api/#record-multiple-events) API resource on a given interval (default: 15 seconds), or when the queue reaches a maximum capacity (default: 5000 events).
 
 ### Defer a single event
 
 ```javascript
-import KeenTracking from 'keen-tracking';
+import PCTracking from 'pc-tracking';
 
-const client = new KeenTracking({
+const client = new PCTracking({
   // projectId: '',
   // writeKey: '',
 
@@ -27,9 +27,9 @@ client.deferEvent('purchase', {
 ### Defer multiple events
 
 ```javascript
-import KeenTracking from 'keen-tracking';
+import PCTracking from 'pc-tracking';
 
-const client = new KeenTracking({ /*configure*/ });
+const client = new PCTracking({ /*configure*/ });
 
 client.deferEvents([
   'collection-1': [
@@ -55,9 +55,9 @@ client.queue.pause();
 Flush all events currently queued by calling `client.recordDeferredEvents()`.
 
 ```javascript
-import KeenTracking from 'keen-tracking';
+import PCTracking from 'pc-tracking';
 
-const client = new KeenTracking({ /*configure*/ });
+const client = new PCTracking({ /*configure*/ });
 
 client.deferEvent('purchase', {
   /* Data Model */

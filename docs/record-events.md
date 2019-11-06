@@ -1,20 +1,20 @@
 # Record events
 
-These methods push single or multiple events to their respective API endpoints. Wondering what you should record? Browse our [data modeling guide](https://keen.io/guides/data-modeling-guide/), and let us know if you don't find what you're looking for.
+These methods push single or multiple events to their respective API endpoints. Wondering what you should record? Browse our [data modeling guide](https://pc.io/guides/data-modeling-guide/), and let us know if you don't find what you're looking for.
 
 ### Record a single event
 
 Here is an example for recording a "purchases" event. Note that dollar amounts are tracked in cents:
 
 ```javascript
-import KeenTracking from 'keen-tracking';
-const client = new KeenTracking({ /*configure*/ });
+import PCTracking from 'pc-tracking';
+const client = new PCTracking({ /*configure*/ });
 
 // Create a data object with the properties you want to record
 const purchaseEvent = {
   item: 'golden gadget',
   price: 2550,
-  keen: {
+  pc: {
     timestamp: new Date().toISOString()
   }
 };
@@ -42,8 +42,8 @@ client.recordEvent('purchases', purchaseEvent, function(err, res){
 Here is an example for how to record multiple events with a single API call. Note that dollar amounts are tracked in cents:
 
 ```javascript
-import KeenTracking from 'keen-tracking';
-const client = new KeenTracking({ /*configure*/ });
+import PCTracking from 'pc-tracking';
+const client = new PCTracking({ /*configure*/ });
 
 const multipleEvents = {
   purchases: [

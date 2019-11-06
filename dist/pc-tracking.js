@@ -182,7 +182,7 @@ Object.defineProperty(exports, "__esModule", {
 var configDefault = exports.configDefault = {
 
   // defer events - queue
-  // https://github.com/keen/keen-tracking.js/blob/master/docs/defer-events.md
+  // https://github.com/pc/pc-tracking.js/blob/master/docs/defer-events.md
   queue: {
     capacity: 5000,
     interval: 15
@@ -190,18 +190,18 @@ var configDefault = exports.configDefault = {
 
   // connection problems - retry request
   retry: {
-    limit: 10,
+    limit: 0,
     initialDelay: 200,
     retryOnResponseStatuses: [408, 500, 502, 503, 504]
   },
 
-  unique: false, // record only unique events?
+  unique: true, // record only unique events?
   // if so - store unique events hashes to compare
   cache: {
     /*
       storage: 'indexeddb', // uncomment for persistence
     */
-    dbName: 'keenTracking', // indexedDB name
+    dbName: 'pcTracking', // indexedDB name
     dbCollectionName: 'events',
     dbCollectionKey: 'hash',
 
@@ -337,7 +337,7 @@ _core2.default.prototype.referrerPolicy = function (str) {
 
 // DEPRECATED
 _core2.default.prototype.setGlobalProperties = function (props) {
-  _core2.default.log('This method has been removed. Check out #extendEvents: https://github.com/keen/keen-tracking.js#extend-events');
+  _core2.default.log('This method has been removed. Check out #extendEvents: https://github.com/pc/pc-tracking.js#extend-events');
   return this;
 };
 
@@ -1077,7 +1077,7 @@ function shouldFlushQueue(props) {
 /* 10 */
 /***/ (function(module) {
 
-module.exports = {"name":"keen-tracking","version":"4.0.15","description":"Track events - custom user actions, clicks, pageviews, purchases.","main":"dist/node/keen-tracking.js","browser":"dist/keen-tracking.js","repository":{"type":"git","url":"https://github.com/keen/keen-tracking.js.git"},"scripts":{"start":"NODE_ENV=development webpack-dev-server","test":"NODE_ENV=test jest && npm run test:node","test:node":"NODE_ENV=test TEST_ENV=node jest","test:watch":"NODE_ENV=test jest --watch","test:node:watch":"NODE_ENV=test TEST_ENV=node jest --watch","build":"NODE_ENV=production webpack -p && NODE_ENV=production OPTIMIZE_MINIMIZE=1 webpack -p && npm run build:node","build:node":"TARGET=node NODE_ENV=production webpack -p","profile":"webpack --profile --json > stats.json","analyze":"webpack-bundle-analyzer stats.json /dist","version":"npm run build && npm run test && git add .","postversion":"git push && git push --tags","demo":"node ./test/demo/index.node.js"},"bugs":"https://github.com/keen/keen-tracking.js/issues","author":"Keen IO <team@keen.io> (https://keen.io/)","homepage":"https://keen.io","keywords":["Tracking","Tracker","Event Tracker","Event tracking","Track events","Page tracking","User tracking","Analytics event tracking","Analytics events","Analytics tracking","Custom events","Analytics","Stats","Statistics","Monitoring","Metrics","Pageviews","Segmentation","Funnel","Conversion","Log","Logger","Logging","Javascript events","Universal tracking","Click analytics"],"contributors":["Dustin Larimer <dustin@keen.io> (https://github.com/dustinlarimer)","Eric Anderson <eric@keen.io> (https://github.com/aroc)","Joe Wegner <joe@keen.io> (http://www.wegnerdesign.com)","Alex Kleissner <alex@keen.io> (https://github.com/hex337)","Adam Kasprowicz <adam.kasprowicz@keen.io> (https://github.com/adamkasprowicz)"],"license":"MIT","dependencies":{"component-emitter":"^1.2.0","js-cookie":"2.1.0","promise-polyfill":"^8.0.0","whatwg-fetch":"^2.0.4"},"devDependencies":{"babel-core":"^6.26.3","babel-jest":"^23.0.1","babel-loader":"^7.1.5","babel-plugin-transform-es2015-modules-commonjs":"^6.26.2","babel-plugin-transform-object-rest-spread":"^6.26.0","babel-polyfill":"^6.26.0","babel-preset-env":"^1.7.0","babel-preset-es2015":"^6.24.1","babel-preset-stage-0":"^6.24.1","eslint":"^4.19.1","eslint-config-airbnb":"^16.1.0","eslint-loader":"^2.0.0","eslint-plugin-import":"^2.11.0","eslint-plugin-jsx-a11y":"^6.0.3","html-loader":"^0.5.5","html-webpack-plugin":"^3.2.0","jest":"^22.4.3","jest-fetch-mock":"^1.6.5","merge":"^1.2.1","nock":"^9.2.6","regenerator-runtime":"^0.11.1","replace-in-file":"^3.4.0","url-parse":"^1.4.3","webpack":"^4.5.0","webpack-bundle-analyzer":"^2.11.1","webpack-cli":"^3.1.2","webpack-dev-server":"^3.1.1","xhr-mock":"^2.3.2"}};
+module.exports = {"name":"pc-tracking","version":"4.0.15","description":"Track events - custom user actions, clicks, pageviews, purchases.","main":"dist/node/pc-tracking.js","browser":"dist/pc-tracking.js","repository":{"type":"git","url":"https://github.com/pc/pc-tracking.js.git"},"scripts":{"start":"NODE_ENV=development webpack-dev-server","test":"NODE_ENV=test jest && npm run test:node","test:node":"NODE_ENV=test TEST_ENV=node jest","test:watch":"NODE_ENV=test jest --watch","test:node:watch":"NODE_ENV=test TEST_ENV=node jest --watch","build":"NODE_ENV=production webpack -p && NODE_ENV=production OPTIMIZE_MINIMIZE=1 webpack -p && npm run build:node","build:node":"TARGET=node NODE_ENV=production webpack -p","profile":"webpack --profile --json > stats.json","analyze":"webpack-bundle-analyzer stats.json /dist","version":"npm run build && npm run test && git add .","postversion":"git push && git push --tags","demo":"node ./test/demo/index.node.js"},"bugs":"https://github.com/pc/pc-tracking.js/issues","author":"PC IO <team@pc.io> (https://pc.io/)","homepage":"https://pc.io","keywords":["Tracking","Tracker","Event Tracker","Event tracking","Track events","Page tracking","User tracking","Analytics event tracking","Analytics events","Analytics tracking","Custom events","Analytics","Stats","Statistics","Monitoring","Metrics","Pageviews","Segmentation","Funnel","Conversion","Log","Logger","Logging","Javascript events","Universal tracking","Click analytics"],"contributors":["Dustin Larimer <dustin@pc.io> (https://github.com/dustinlarimer)","Eric Anderson <eric@pc.io> (https://github.com/aroc)","Joe Wegner <joe@pc.io> (http://www.wegnerdesign.com)","Alex Kleissner <alex@pc.io> (https://github.com/hex337)","Adam Kasprowicz <adam.kasprowicz@pc.io> (https://github.com/adamkasprowicz)"],"license":"MIT","dependencies":{"component-emitter":"^1.2.0","js-cookie":"2.1.0","promise-polyfill":"^8.0.0","whatwg-fetch":"^2.0.4"},"devDependencies":{"babel-core":"^6.26.3","babel-jest":"^23.0.1","babel-loader":"^7.1.5","babel-plugin-transform-es2015-modules-commonjs":"^6.26.2","babel-plugin-transform-object-rest-spread":"^6.26.0","babel-polyfill":"^6.26.0","babel-preset-env":"^1.7.0","babel-preset-es2015":"^6.24.1","babel-preset-stage-0":"^6.24.1","eslint":"^4.19.1","eslint-config-airbnb":"^16.1.0","eslint-loader":"^2.0.0","eslint-plugin-import":"^2.11.0","eslint-plugin-jsx-a11y":"^6.0.3","html-loader":"^0.5.5","html-webpack-plugin":"^3.2.0","jest":"^22.4.3","jest-fetch-mock":"^1.6.5","merge":"^1.2.1","nock":"^9.2.6","regenerator-runtime":"^0.11.1","replace-in-file":"^3.4.0","url-parse":"^1.4.3","webpack":"^4.5.0","webpack-bundle-analyzer":"^2.11.1","webpack-cli":"^3.1.2","webpack-dev-server":"^3.1.1","xhr-mock":"^2.3.2"}};
 
 /***/ }),
 /* 11 */
@@ -1615,7 +1615,7 @@ module.exports = __webpack_require__(19);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.KeenTracking = exports.Keen = exports.keenGlobals = undefined;
+exports.PCTracking = exports.PC = exports.pcGlobals = undefined;
 
 var _index = __webpack_require__(6);
 
@@ -1732,21 +1732,21 @@ _index2.default.listenTo = function (listenerHash) {
   });
 };
 
-var keenGlobals = exports.keenGlobals = undefined;
-if (typeof webpackKeenGlobals !== 'undefined') {
-  exports.keenGlobals = keenGlobals = webpackKeenGlobals;
+var pcGlobals = exports.pcGlobals = undefined;
+if (typeof webpackPCGlobals !== 'undefined') {
+  exports.pcGlobals = pcGlobals = webpackPCGlobals;
 }
 
-var Keen = exports.Keen = _index2.default.extendLibrary(_index2.default); // deprecated, left for backward compatibility
-var KeenTracking = exports.KeenTracking = Keen;
-exports.default = Keen;
+var PC = exports.PC = _index2.default.extendLibrary(_index2.default); // deprecated, left for backward compatibility
+var PCTracking = exports.PCTracking = PC;
+exports.default = PC;
 
 /***/ }),
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {(function(env){
-  var previousKeen = env.Keen || undefined;
+  var previousPC = env.PC || undefined;
   var each = __webpack_require__(0),
       extend = __webpack_require__(1),
       parseParams = __webpack_require__(21),
@@ -1768,8 +1768,8 @@ exports.default = Keen;
     Client.emit('client', this);
   }
 
-  if (previousKeen && typeof previousKeen.resources === 'undefined') {
-    Client.legacyVersion = previousKeen;
+  if (previousPC && typeof previousPC.resources === 'undefined') {
+    Client.legacyVersion = previousPC;
   }
 
   Emitter(Client);
@@ -1788,7 +1788,7 @@ exports.default = Keen;
   // Set or extend resources
   Client.resources = Client.resources || {};
   extend(Client.resources, {
-    'base'      : '{protocol}://{host}'
+    'base'      : '{protocol}://{host}/'
   });
 
   // Set or extend utils
@@ -1801,7 +1801,7 @@ exports.default = Keen;
   });
 
   Client.extendLibrary = function(target, source) {
-    var previous = previousKeen || source;
+    var previous = previousPC || source;
     if (isDefined(previous) && isDefined(previous.resources)) {
       each(previous, function(value, key) {
         if (typeof value === 'object') {
@@ -1819,13 +1819,13 @@ exports.default = Keen;
 
   Client.log = function(str){
     if (Client.debug && typeof console === 'object') {
-      console.log('[Keen]', str);
+      console.log('[PC]', str);
     }
   };
 
   Client.noConflict = function(){
-    if (typeof env.Keen !== 'undefined') {
-      env.Keen = Client.legacyVersion || previousKeen;
+    if (typeof env.PC !== 'undefined') {
+      env.PC = Client.legacyVersion || previousPC;
     }
     return Client;
   };
@@ -1842,9 +1842,7 @@ exports.default = Keen;
   Client.prototype.configure = function(obj){
     var config = obj || {};
     this.config = this.config || {
-      projectId    : undefined,
-      writeKey     : undefined,
-      host         : 'analytics.pctest.io',
+      host         : 'clickstream.events',
       protocol     : 'https',
       requestType  : 'jsonp',
       resources    : extend({}, Client.resources)
@@ -2039,7 +2037,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /*
 
   // Create a new element listner
-  var myClickerCatcher = Keen.utils.listener(".nav li > a");
+  var myClickerCatcher = PC.utils.listener(".nav li > a");
 
   // Listen for a given event
   myClicker.on("click", function(e){
@@ -2413,7 +2411,7 @@ function recordEvent(eventCollectionOrConfigObject, eventBody, callback) {
   this.emit('recordEvent', eventCollection, extendedEventsHash);
 
   if (!_index2.default.enabled) {
-    handleValidationError.call(this, 'Keen.enabled is set to false.', callback);
+    handleValidationError.call(this, 'PC.enabled is set to false.', callback);
     return false;
   }
 
@@ -2467,7 +2465,7 @@ function recordEvents(eventsHash, callback) {
   this.emit('recordEvents', extendedEventsHash);
 
   if (!_index2.default.enabled) {
-    handleValidationError.call(this, 'Keen.enabled is set to false.', callback);
+    handleValidationError.call(this, 'PC.enabled is set to false.', callback);
     return false;
   }
 
@@ -2490,7 +2488,9 @@ function send(_ref) {
   // so you can send specific recordEvent() using beaconAPI
   // even if your global client's config prefers Fetch
   ) {
-      navigator.sendBeacon(url + '?api_key=' + this.writeKey(), JSON.stringify(extendedEventsHash));
+      navigator.sendBeacon(
+      // `${url}?api_key=${this.writeKey()}`,
+      '' + url, JSON.stringify(extendedEventsHash));
       if (callback) {
         // Beacon API is not handling responses nor errors
         callback();
@@ -2501,7 +2501,7 @@ function send(_ref) {
   // this is IMAGE beacon, not the Beacon API. deprecated
   if (requestType === 'beacon' || requestType === 'img') {
     var getRequestUrl = this.url('events', encodeURIComponent(eventCollection), {
-      api_key: this.writeKey(),
+      // api_key  : this.writeKey(),
       data: encodeURIComponent(_base2.default.encode(JSON.stringify(extendedEventsHash))),
       modified: new Date().getTime()
     });
@@ -2606,14 +2606,14 @@ function checkEventsSavedSuccessfuly(response) {
 // Validation
 function checkValidation(callback) {
 
-  if (!this.projectId()) {
-    handleValidationError.call(this, 'Keen.Client is missing a projectId property.', callback);
-    return false;
-  }
-  if (!this.writeKey()) {
-    handleValidationError.call(this, 'Keen.Client is missing a writeKey property.', callback);
-    return false;
-  }
+  // if (!this.projectId()) {
+  //   handleValidationError.call(this, 'PC.Client is missing a projectId property.', callback);
+  //   return false;
+  // }
+  // if (!this.writeKey()) {
+  //   handleValidationError.call(this, 'PC.Client is missing a writeKey property.', callback);
+  //   return false;
+  // }
   return true;
 }
 
@@ -3595,238 +3595,213 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function initAutoTrackingCore(lib) {
   return function (obj) {
     var client = this;
-    var helpers = lib.helpers;
-    var utils = lib.utils;
 
-    var options = utils.extend({
-      ignoreDisabledFormFields: false,
-      ignoreFormFieldTypes: ['password'],
-      recordClicks: true,
-      recordFormSubmits: true,
-      recordPageViews: true,
-      recordPageViewsOnExit: false,
-      recordScrollState: true,
-      shareUuidAcrossDomains: false,
-      collectIpAddress: true,
-      collectUuid: true,
-      catchError: undefined // optional, function(someError) - error handler
-    }, obj);
+    if (!window.trackingInitialized) {
+      window.trackingInitialized = true;
+      var helpers = lib.helpers;
+      var utils = lib.utils;
+      var load_id = helpers.getUniqueId();
+      var options = utils.extend({
+        ignoreDisabledFormFields: false,
+        ignoreFormFieldTypes: ['password'],
+        recordClicks: true,
+        recordChanges: true,
+        recordFormSubmits: false,
+        recordPageViews: true,
+        recordPageViewsOnExit: false,
+        recordScrollState: true,
+        shareUuidAcrossDomains: true,
+        collectIpAddress: true,
+        collectUuid: true,
+        catchError: undefined // optional, function(someError) - error handler
+      }, obj);
 
-    if (client.config.requestType === 'beaconAPI' && options.catchError) {
-      throw 'You cannot use the BeaconAPI and catchError function in the same time, because BeaconAPI ignores errors. For requests with error handling - use requestType: \'fetch\'';
-      return;
-    }
+      if (client.config.requestType === 'beaconAPI' && options.catchError) {
+        throw 'You cannot use the BeaconAPI and catchError function in the same time, because BeaconAPI ignores errors. For requests with error handling - use requestType: \'fetch\'';
+        return;
+      }
 
-    if (client.config.requestType === 'jsonp' // jsonp is deprecated, it's the default value from old keen's client
-    ) {
-        if (options.catchError) {
-          client.config.requestType = 'fetch';
-        } else {
-          client.config.requestType = 'beaconAPI';
+      if (client.config.requestType === 'jsonp' // jsonp is deprecated, it's the default value from old pc's client
+      ) {
+          if (options.catchError) {
+            client.config.requestType = 'fetch';
+          } else {
+            client.config.requestType = 'beaconAPI';
+          }
+        }
+
+      var now = new Date();
+      var cookie = new utils.cookie('pc');
+
+      var domainName = helpers.getDomainName(window.location.hostname);
+      var cookieDomain = domainName && options.shareUuidAcrossDomains ? {
+        domain: '.' + domainName
+      } : {};
+
+      var uuid = void 0;
+      if (options.collectUuid) {
+        uuid = cookie.get('uuid');
+        if (!uuid) {
+          uuid = helpers.getUniqueId();
+          cookie.set('uuid', uuid, cookieDomain);
         }
       }
 
-    var now = new Date();
-    var cookie = new utils.cookie('keen');
-
-    var domainName = helpers.getDomainName(window.location.hostname);
-    var cookieDomain = domainName && options.shareUuidAcrossDomains ? {
-      domain: '.' + domainName
-    } : {};
-
-    var uuid = void 0;
-    if (options.collectUuid) {
-      uuid = cookie.get('uuid');
-      if (!uuid) {
-        uuid = helpers.getUniqueId();
-        cookie.set('uuid', uuid, cookieDomain);
+      var initialReferrer = cookie.get('initialReferrer');
+      if (!initialReferrer) {
+        initialReferrer = document && document.referrer || undefined;
+        cookie.set('initialReferrer', initialReferrer, cookieDomain);
       }
-    }
 
-    var initialReferrer = cookie.get('initialReferrer');
-    if (!initialReferrer) {
-      initialReferrer = document && document.referrer || undefined;
-      cookie.set('initialReferrer', initialReferrer, cookieDomain);
-    }
+      var scrollState = {};
+      if (options.recordScrollState) {
+        scrollState = helpers.getScrollState();
+        utils.listener('window').on('scroll', function () {
+          scrollState = helpers.getScrollState(scrollState);
+        });
+      }
 
-    var scrollState = {};
-    if (options.recordScrollState) {
-      scrollState = helpers.getScrollState();
-      utils.listener('window').on('scroll', function () {
-        scrollState = helpers.getScrollState(scrollState);
-      });
-    }
+      client.extendEvents(function () {
+        var browserProfile = helpers.getBrowserProfile();
+        return {
+          tracked_by: _package2.default.name + '-' + _package2.default.version,
+          local_time_full: new Date().toISOString(),
+          user: {
+            uuid: uuid
+          },
+          page: {
+            load_id: load_id,
+            title: document ? document.title : null,
+            description: browserProfile.description,
+            scroll_state: scrollState,
+            time_on_page: getSecondsSinceDate(now),
+            time_on_page_ms: getMiliSecondsSinceDate(now)
+          },
+          user_agent: window.navigator.userAgent,
+          tech: {
+            profile: browserProfile
+          },
+          pc: window && window.pcBaseObj ? window.pcBaseObj : {},
+          url: {
+            full: window ? window.location.href : '',
+            host: window ? window.location.hostname : '',
+            domain: window ? getDomain(window.location.hostname) : '',
+            path: window ? window.location.pathname : '',
+            qs: window ? window.location.search : ''
+          },
 
-    var addons = [{
-      name: 'keen:ua_parser',
-      input: {
-        ua_string: 'user_agent'
-      },
-      output: 'tech'
-    }, {
-      name: 'keen:url_parser',
-      input: {
-        url: 'url.full'
-      },
-      output: 'url.info'
-    }, {
-      name: 'keen:url_parser',
-      input: {
-        url: 'referrer.full'
-      },
-      output: 'referrer.info'
-    }, {
-      name: 'keen:date_time_parser',
-      input: {
-        date_time: 'keen.timestamp'
-      },
-      output: 'time.utc'
-    }, {
-      name: 'keen:date_time_parser',
-      input: {
-        date_time: 'local_time_full'
-      },
-      output: 'time.local'
-    }];
-
-    var ip_address = '${keen.ip}';
-    addons.push({
-      name: 'keen:ip_to_geo',
-      input: {
-        ip: 'ip_address',
-        remove_ip_property: !options.collectIpAddress
-      },
-      output: 'geo'
-    });
-
-    client.extendEvents(function () {
-      var browserProfile = helpers.getBrowserProfile();
-      return {
-        tracked_by: _package2.default.name + '-' + _package2.default.version,
-        local_time_full: new Date().toISOString(),
-        user: {
-          uuid: uuid
-        },
-        page: {
-          title: document ? document.title : null,
-          description: browserProfile.description,
-          scroll_state: scrollState,
-          time_on_page: getSecondsSinceDate(now),
-          time_on_page_ms: getMiliSecondsSinceDate(now)
-        },
-
-        ip_address: ip_address,
-        geo: {/* Enriched */},
-
-        user_agent: '${keen.user_agent}',
-        tech: {
-          profile: browserProfile
-          /* Enriched */
-        },
-
-        url: {
-          full: window ? window.location.href : '',
-          info: {/* Enriched */}
-        },
-
-        referrer: {
-          initial: initialReferrer,
-          full: document ? document.referrer : '',
-          info: {/* Enriched */}
-        },
-
-        time: {
-          local: {/* Enriched */},
-          utc: {/* Enriched */}
-        },
-
-        keen: {
-          timestamp: new Date().toISOString(),
-          addons: addons
-        }
-      };
-    });
-
-    if (options.recordClicks === true) {
-      utils.listener('a, a *').on('click', function (e) {
-        var el = e.target;
-        var event = {
-          element: helpers.getDomNodeProfile(el),
-          local_time_full: new Date().toISOString()
+          referrer: {
+            initial: initialReferrer,
+            full: document ? document.referrer : ''
+          }
         };
+      });
 
-        if (options.catchError) {
+      if (options.recordClicks === true) {
+        utils.listener('*').on('click', function (e) {
+          var el = e.target;
+          var event = {
+            element: helpers.getDomNodeProfile(el),
+            local_time_full: new Date().toISOString()
+          };
+
+          if (options.catchError) {
+            return client.recordEvent({
+              collection: 'clicks',
+              event: event
+            }).catch(function (err) {
+              options.catchError(err);
+            });
+          }
+
           return client.recordEvent({
             collection: 'clicks',
             event: event
-          }).catch(function (err) {
-            options.catchError(err);
           });
-        }
-
-        return client.recordEvent({
-          collection: 'clicks',
-          event: event
         });
-      });
-    }
+      }
 
-    if (options.recordFormSubmits === true) {
-      utils.listener('form').on('submit', function (e) {
-        var el = e.target;
-        var serializerOptions = {
-          disabled: options.ignoreDisabledFormFields,
-          ignoreTypes: options.ignoreFormFieldTypes
-        };
-        var event = {
-          form: {
-            action: el.action,
-            fields: utils.serializeForm(el, serializerOptions),
-            method: el.method
-          },
-          element: helpers.getDomNodeProfile(el),
-          local_time_full: new Date().toISOString()
-        };
+      if (options.recordChanges === true) {
+        utils.listener('*').on('change', function (e) {
+          var el = e.target;
+          var event = {
+            element: helpers.getDomNodeProfile(el),
+            local_time_full: new Date().toISOString()
+          };
 
-        if (options.catchError) {
+          if (options.catchError) {
+            return client.recordEvent({
+              collection: 'changes',
+              event: event
+            }).catch(function (err) {
+              options.catchError(err);
+            });
+          }
+
+          return client.recordEvent({
+            collection: 'changes',
+            event: event
+          });
+        });
+      }
+
+      if (options.recordFormSubmits === true) {
+        utils.listener('form').on('submit', function (e) {
+          var el = e.target;
+          var serializerOptions = {
+            disabled: options.ignoreDisabledFormFields,
+            ignoreTypes: options.ignoreFormFieldTypes
+          };
+          var event = {
+            form: {
+              action: el.action,
+              fields: utils.serializeForm(el, serializerOptions),
+              method: el.method
+            },
+            element: helpers.getDomNodeProfile(el),
+            local_time_full: new Date().toISOString()
+          };
+
+          if (options.catchError) {
+            return client.recordEvent({
+              collection: 'form_submissions',
+              event: event
+            }).catch(function (err) {
+              options.catchError(err);
+            });
+          }
+
           return client.recordEvent({
             collection: 'form_submissions',
             event: event
+          });
+        });
+      }
+
+      if (options.recordPageViews === true && !options.recordPageViewsOnExit && !client.firedPageview) {
+        client.firedPageview = true;
+        if (options.catchError) {
+          client.recordEvent({
+            collection: 'pageviews'
           }).catch(function (err) {
             options.catchError(err);
           });
+        } else {
+          client.recordEvent({
+            collection: 'pageviews'
+          });
         }
+      }
 
-        return client.recordEvent({
-          collection: 'form_submissions',
-          event: event
-        });
-      });
-    }
-
-    if (options.recordPageViews === true && !options.recordPageViewsOnExit) {
-      if (options.catchError) {
-        client.recordEvent({
-          collection: 'pageviews'
-        }).catch(function (err) {
-          options.catchError(err);
-        });
-      } else {
-        client.recordEvent({
-          collection: 'pageviews'
+      if (options.recordPageViewsOnExit && typeof window !== 'undefined') {
+        window.addEventListener('beforeunload', function () {
+          client.config.requestType = 'beaconAPI'; // you can run beforeunload only with beaconAPI
+          client.recordEvent({
+            collection: 'pageviews'
+          });
         });
       }
     }
-
-    if (options.recordPageViewsOnExit && typeof window !== 'undefined') {
-      window.addEventListener('beforeunload', function () {
-        client.config.requestType = 'beaconAPI'; // you can run beforeunload only with beaconAPI
-        client.recordEvent({
-          collection: 'pageviews'
-        });
-      });
-    }
-
     return client;
   };
 }
@@ -3837,6 +3812,11 @@ function getSecondsSinceDate(date) {
 
 function getMiliSecondsSinceDate(date) {
   return new Date().getTime() - date.getTime();
+}
+
+function getDomain(hostname) {
+  var p = hostname.split('.');
+  return [p.pop(), p.pop()].reverse().join('.');
 }
 
 /***/ }),
@@ -3974,7 +3954,8 @@ function getDomNodeProfile(el) {
     name: el.name,
     node_name: el.nodeName,
     selector: (0, _getDomNodePath.getDomNodePath)(el),
-    text: getElementProps(el, 'text'),
+    text: getElementProps(el, 'text') || getElementProps(el, "innerText"),
+    value: getElementProps(el, 'value'),
     title: getElementProps(el, 'title'),
     type: el.type,
     x_position: el.offsetLeft || el.clientLeft || null,
@@ -4621,4 +4602,4 @@ timer.prototype.clear = function () {
 /***/ })
 /******/ ]);
 });
-//# sourceMappingURL=keen-tracking.js.map
+//# sourceMappingURL=pc-tracking.js.map

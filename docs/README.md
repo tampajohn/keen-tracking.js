@@ -50,27 +50,27 @@
 
 ### Debugging
 
-Dev console errors and messages are turned off by default, but can be activated by setting `KeenTracking.debug = true;`. Additionally, you can disable writing events to the API by setting `KeenTracking.enabled = false;`.
+Dev console errors and messages are turned off by default, but can be activated by setting `PCTracking.debug = true;`. Additionally, you can disable writing events to the API by setting `PCTracking.enabled = false;`.
 
 ```javascript
-import KeenTracking from 'keen-tracking';
+import PCTracking from 'pc-tracking';
 
 // Track errors and messages in the dev console
-KeenTracking.debug = true;
+PCTracking.debug = true;
 
 // Disable event writes to the API
-KeenTracking.enabled = false;
+PCTracking.enabled = false;
 
-const client = new KeenTracking({ /*configure*/ });
+const client = new PCTracking({ /*configure*/ });
 
 // Observe what's happening in each method
-client.on('recordEvent', KeenTracking.log);
-client.on('recordEvents', KeenTracking.log);
-client.on('deferEvent', KeenTracking.log);
-client.on('deferEvents', KeenTracking.log);
-client.on('recordDeferredEvents', KeenTracking.log);
-client.on('extendEvent', KeenTracking.log);
-client.on('extendEvents', KeenTracking.log);
+client.on('recordEvent', PCTracking.log);
+client.on('recordEvents', PCTracking.log);
+client.on('deferEvent', PCTracking.log);
+client.on('deferEvents', PCTracking.log);
+client.on('recordDeferredEvents', PCTracking.log);
+client.on('extendEvent', PCTracking.log);
+client.on('extendEvents', PCTracking.log);
 ```
 
 ---
@@ -85,10 +85,10 @@ This is an open source project and we love involvement from the community! Hit u
 
 ### Support
 
-Need a hand with something? Shoot us an email at [team@keen.io](mailto:team@keen.io). We're always happy to help, or just hear what you're building! Here are a few other resources worth checking out:
+Need a hand with something? Shoot us an email at [team@pc.io](mailto:team@pc.io). We're always happy to help, or just hear what you're building! Here are a few other resources worth checking out:
 
-* [API status](http://status.keen.io/)
-* [API reference](https://keen.io/docs/api)
-* [How-to guides](https://keen.io/guides)
-* [Data modeling guide](https://keen.io/guides/data-modeling-guide/)
-* [Slack (public)](http://slack.keen.io/)
+* [API status](http://status.pc.io/)
+* [API reference](https://pc.io/docs/api)
+* [How-to guides](https://pc.io/guides)
+* [Data modeling guide](https://pc.io/guides/data-modeling-guide/)
+* [Slack (public)](http://slack.pc.io/)

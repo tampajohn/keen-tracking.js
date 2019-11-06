@@ -1,6 +1,6 @@
-# keen-tracking.js
+# pc-tracking.js
 
-A JavaScript tracking library for [Keen](https://keen.io).
+A JavaScript tracking library for [PC](https://pc.io).
 Track events, user actions, clicks, pageviews, conversions and more!
 
 ### Installation
@@ -8,18 +8,18 @@ Track events, user actions, clicks, pageviews, conversions and more!
 Install this package from NPM *Recommended*
 
 ```ssh
-npm install keen-tracking --save
+npm install pc-tracking --save
 ```
 
 Or load it from public CDN
 
 ```html
-<script crossorigin src="https://cdn.jsdelivr.net/npm/keen-tracking@4"></script>
+<script crossorigin src="https://cdn.jsdelivr.net/npm/pc-tracking@4"></script>
 ```
 
 ### Project ID & API Keys
 
-[Login to Keen IO to create a project](https://keen.io/login?s=gh_js) and grab the **Project ID** and **Write Key** from your project's **Access** page.
+[Login to PC IO to create a project](https://pc.io/login?s=gh_js) and grab the **Project ID** and **Write Key** from your project's **Access** page.
 
 ## Getting started
 
@@ -32,16 +32,16 @@ The following examples demonstrate how to implement rock-solid web analytics, ca
 * [React Flux Logger](./docs/examples/react-flux): How to instrument a Flux ReduceStore
 * [React Redux Middleware](./docs/examples/react-redux-middleware): How to instrument a Redux Store
 
-**Upgrading from an earlier version of keen-js?** [Read this](./docs/upgrade-guide.md).
+**Upgrading from an earlier version of pc-js?** [Read this](./docs/upgrade-guide.md).
 
 ---
 
 ### Record an Event
 
 ```javascript
-import KeenTracking from 'keen-tracking';
+import PCTracking from 'pc-tracking';
 
-const client = new KeenTracking({
+const client = new PCTracking({
   projectId: 'PROJECT_ID',
   writeKey: 'WRITE_KEY'
 });
@@ -71,10 +71,10 @@ Automatically record `pageviews`, `clicks`, and `form_submissions` events with r
 ```html
 <script>
   (function(name,path,ctx){ctx[name]=ctx[name]||{ready:function(fn){var h=document.getElementsByTagName('head')[0],s=document.createElement('script'),w=window,loaded;s.onload=s.onerror=s.onreadystatechange=function(){if((s.readyState&&!(/^c|loade/.test(s.readyState)))||loaded){return}s.onload=s.onreadystatechange=null;loaded=1;ctx[name].ready(fn)};s.async=1;s.src=path;h.parentNode.insertBefore(s,h)}}})
-  ('KeenTracking', 'https://cdn.jsdelivr.net/npm/keen-tracking@4/dist/keen-tracking.min.js', this);
+  ('PCTracking', 'https://cdn.jsdelivr.net/npm/pc-tracking@4/dist/pc-tracking.min.js', this);
 
-  KeenTracking.ready(function(){
-    const client = new KeenTracking({
+  PCTracking.ready(function(){
+    const client = new PCTracking({
       projectId: 'YOUR_PROJECT_ID',
       writeKey: 'YOUR_WRITE_KEY'
     });
@@ -89,17 +89,17 @@ Automatically record `pageviews`, `clicks`, and `form_submissions` events with r
 
 ### Pageview Tracking
 
-First, let's create a new `client` instance with your Project ID and Write Key, and use the `.extendEvents()` method to define a solid baseline data model that will be applied to every single event that is recorded. Consistent data models and property names make life much easier later on, when analyzing and managing several event streams. This setup also includes our [data enrichment add-ons](https://keen.io/docs/streams/data-enrichment-overview/), which will populate additional information when an event is received on our end.
+First, let's create a new `client` instance with your Project ID and Write Key, and use the `.extendEvents()` method to define a solid baseline data model that will be applied to every single event that is recorded. Consistent data models and property names make life much easier later on, when analyzing and managing several event streams. This setup also includes our [data enrichment add-ons](https://pc.io/docs/streams/data-enrichment-overview/), which will populate additional information when an event is received on our end.
 
 ```javascript
-import KeenTracking from 'keen-tracking';
+import PCTracking from 'pc-tracking';
 
-const client = new KeenTracking({
+const client = new PCTracking({
   projectId: 'PROJECT_ID',
   writeKey: 'WRITE_KEY'
 });
-const helpers = KeenTracking.helpers;
-const utils = KeenTracking.utils;
+const helpers = PCTracking.helpers;
+const utils = PCTracking.utils;
 
 const sessionCookie = utils.cookie('rename-this-example-cookie');
 if (!sessionCookie.get('guest_id')) {
@@ -110,10 +110,10 @@ if (!sessionCookie.get('guest_id')) {
 client.extendEvents(() => {
   return {
     geo: {
-      ip_address: '${keen.ip}',
+      ip_address: '${pc.ip}',
       info: {
         /* Enriched data from the API will be saved here */
-        /* https://keen.io/docs/api/?javascript#ip-to-geo-parser */
+        /* https://pc.io/docs/api/?javascript#ip-to-geo-parser */
       }
     },
     page: {
@@ -127,7 +127,7 @@ client.extendEvents(() => {
     },
     tech: {
       browser: helpers.getBrowserProfile(),
-      user_agent: '${keen.user_agent}',
+      user_agent: '${pc.user_agent}',
       info: { /* Enriched */ }
     },
     time: helpers.getDatetimeIndex(),
@@ -135,31 +135,31 @@ client.extendEvents(() => {
       guest_id: sessionCookie.get('guest_id')
       /* Include additional visitor info here */
     },
-    keen: {
+    pc: {
       addons: [
         {
-          name: 'keen:ip_to_geo',
+          name: 'pc:ip_to_geo',
           input: {
             ip: 'geo.ip_address'
           },
           output : 'geo.info'
         },
         {
-          name: 'keen:ua_parser',
+          name: 'pc:ua_parser',
           input: {
             ua_string: 'tech.user_agent'
           },
           output: 'tech.info'
         },
         {
-          name: 'keen:url_parser',
+          name: 'pc:url_parser',
           input: {
             url: 'page.url'
           },
           output: 'page.info'
         },
         {
-          name: 'keen:referrer_parser',
+          name: 'pc:referrer_parser',
           input: {
             referrer_url: 'referrer.url',
             page_url: 'page.url'
@@ -218,17 +218,17 @@ Clicks and form submissions can be captured with `.listenTo()`. This function in
 This example further extends the `client` instance defined previously, and activates a simple timer when the page the loaded. Once a `click` or `submit` event is captured, the timer's value will be recorded as `visitor.time_on_page`.
 
 ```javascript
-import KeenTracking from 'keen-tracking';
+import PCTracking from 'pc-tracking';
 
-const client = new KeenTracking({
+const client = new PCTracking({
   projectId: 'PROJECT_ID',
   writeKey: 'WRITE_KEY'
 });
-const helpers = KeenTracking.helpers;
-const timer = KeenTracking.utils.timer();
+const helpers = PCTracking.helpers;
+const timer = PCTracking.utils.timer();
 timer.start();
 
-KeenTracking.listenTo({
+PCTracking.listenTo({
   'click .nav a': (e) => {
     return client.recordEvent('click', {
       action: {
@@ -265,7 +265,7 @@ Click events (`clicks`) will record specific attributes from the clicked element
     "element": {
       "action" : undefined,                 // [DIRECT]
       "class": "cta",                       // [DIRECT]
-      "href": "https://keen.io/plans/",     // [INHERITED]
+      "href": "https://pc.io/plans/",     // [INHERITED]
       "id": "main-cta",                     // [INHERITED]
       "event_key": "learn-more-cta",        // [INHERITED] from the `data-event-key` attribute
       "method": "learn-more-link",          // [DIRECT]
@@ -301,7 +301,7 @@ Would generate an event including a mixture of immediate attributes and attribut
   "event_key" : "click-me-cta",
 }
 ```
-**Note:** The `event_key` value (`data-event-key` attribute) is a more explicit keen-specific identifier that gives you an option outside of `href`, `id`, and `class` values to group or identify and query clicks in a meaningful way without potential ID/class collisions or dual-use naming schemes.
+**Note:** The `event_key` value (`data-event-key` attribute) is a more explicit pc-specific identifier that gives you an option outside of `href`, `id`, and `class` values to group or identify and query clicks in a meaningful way without potential ID/class collisions or dual-use naming schemes.
 
 Want to get up and running faster? This can also be achieved in the browser with [automated event tracking](./docs/auto-tracking.md).
 
@@ -344,9 +344,9 @@ This can also be used with [automated event tracking](./docs/auto-tracking.md).
 ### Server-side Event Tracking
 
 ```javascript
-const KeenTracking = require('keen-tracking');
+const PCTracking = require('pc-tracking');
 
-const client = new KeenTracking({
+const client = new PCTracking({
   projectId: 'PROJECT_ID',
   writeKey: 'WRITE_KEY'
 });
@@ -388,12 +388,12 @@ client
 
 ### Handling connection problems
 
-When KeenTracking encounters connection problems, it will retry to send the data.
+When PCTracking encounters connection problems, it will retry to send the data.
 
 ```javascript
-import KeenTracking from 'keen-tracking';
+import PCTracking from 'pc-tracking';
 
-const client = new KeenTracking({
+const client = new PCTracking({
   projectId: 'PROJECT_ID',
   writeKey: 'WRITE_KEY',
 
@@ -456,7 +456,7 @@ to handle errors. If you want to handle errors, you need to use the Fetch API.
 
 ```javascript
 // specify request types for all requests
-const client = new KeenTracking({
+const client = new PCTracking({
   projectId: 'PROJECT_ID',
   writeKey: 'WRITE_KEY',
   requestType: 'fetch' // fetch, beaconAPI, img
@@ -495,10 +495,10 @@ This is an open source project and we love involvement from the community! Hit u
 
 ### Support
 
-Need a hand with something? Shoot us an email at [team@keen.io](mailto:team@keen.io). We're always happy to help, or just hear what you're building! Here are a few other resources worth checking out:
+Need a hand with something? Shoot us an email at [team@pc.io](mailto:team@pc.io). We're always happy to help, or just hear what you're building! Here are a few other resources worth checking out:
 
-* [API status](http://status.keen.io/)
-* [API reference](https://keen.io/docs/api)
-* [How-to guides](https://keen.io/guides)
-* [Data modeling guide](https://keen.io/guides/data-modeling-guide/)
-* [Slack (public)](http://slack.keen.io/)
+* [API status](http://status.pc.io/)
+* [API reference](https://pc.io/docs/api)
+* [How-to guides](https://pc.io/guides)
+* [Data modeling guide](https://pc.io/guides/data-modeling-guide/)
+* [Slack (public)](http://slack.pc.io/)

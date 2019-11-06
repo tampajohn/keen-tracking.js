@@ -6,7 +6,7 @@ Run the following commands to install and build this project:
 
 ```ssh
 # Clone the repo
-git clone https://github.com/keen/keen-tracking.js.git && cd keen-tracking.js
+git clone https://github.com/tampajohn/pc-tracking.js.git && cd pc-tracking.js
 
 # Install project dependencies
 npm install
@@ -40,7 +40,7 @@ Fetch the branch and/or deploy to staging to test the following:
 - [ ] Do all tests pass? (run `gulp with-tests`)
 - [ ] Does the UI, pixel by pixel, look exactly as expected (check various screen sizes, including mobile)?
 - [ ] If the feature makes requests from the browser, inspect them in the Web Inspector. Do they look as expected (parameters, headers, etc)?
-- [ ] If the feature sends data to Keen, is the data visible in the project if you run an extraction (include link to collection/query)?
+- [ ] If the feature sends data to PC, is the data visible in the project if you run an extraction (include link to collection/query)?
 - [ ] If the feature saves data to a database, can you confirm the data is indeed created in the database?
 
 ## Related tickets?

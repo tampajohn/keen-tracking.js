@@ -1,11 +1,11 @@
 # Cookies
 
-`KeenTracking.utils.cookie(key)` finds or creates a cookie with a given key (string) value, and returns an object with several methods for managing the data contained in that cookie.
+`PCTracking.utils.cookie(key)` finds or creates a cookie with a given key (string) value, and returns an object with several methods for managing the data contained in that cookie.
 
 This utility uses [js-cookie](https://github.com/js-cookie/js-cookie).
 
 ```javascript
-const sessionCookie = KeenTracking.utils.cookie('visitor-stats');
+const sessionCookie = PCTracking.utils.cookie('visitor-stats');
 
 // Set a single value
 sessionCookie.set('user_id', '222323843234');
@@ -13,7 +13,7 @@ sessionCookie.set('user_id', '222323843234');
 // Set multiple values
 sessionCookie.set({
   user_id: '222323843234',
-  first_referrer: 'https://github.com/keen/keen-tracking.js'
+  first_referrer: 'https://github.com/pc/pc-tracking.js'
 })
 
 // Get a single value, if it exists
@@ -44,7 +44,7 @@ Prior to the 1.0 release, this library used [Cookies.js](https://github.com/Scot
 
 ```javascript
 const cookies = document.cookie.split(';');
-const myCookie = KeenTracking.utils.cookie('your-cookie-name');
+const myCookie = PCTracking.utils.cookie('your-cookie-name');
 let badData;
 let newData;
 

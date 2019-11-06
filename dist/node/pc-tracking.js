@@ -203,7 +203,7 @@ _core2.default.prototype.referrerPolicy = function (str) {
 
 // DEPRECATED
 _core2.default.prototype.setGlobalProperties = function (props) {
-  _core2.default.log('This method has been removed. Check out #extendEvents: https://github.com/keen/keen-tracking.js#extend-events');
+  _core2.default.log('This method has been removed. Check out #extendEvents: https://github.com/pc/pc-tracking.js#extend-events');
   return this;
 };
 
@@ -224,7 +224,7 @@ Object.defineProperty(exports, "__esModule", {
 var configDefault = exports.configDefault = {
 
   // defer events - queue
-  // https://github.com/keen/keen-tracking.js/blob/master/docs/defer-events.md
+  // https://github.com/pc/pc-tracking.js/blob/master/docs/defer-events.md
   queue: {
     capacity: 5000,
     interval: 15
@@ -232,18 +232,18 @@ var configDefault = exports.configDefault = {
 
   // connection problems - retry request
   retry: {
-    limit: 10,
+    limit: 0,
     initialDelay: 200,
     retryOnResponseStatuses: [408, 500, 502, 503, 504]
   },
 
-  unique: false, // record only unique events?
+  unique: true, // record only unique events?
   // if so - store unique events hashes to compare
   cache: {
     /*
       storage: 'indexeddb', // uncomment for persistence
     */
-    dbName: 'keenTracking', // indexedDB name
+    dbName: 'pcTracking', // indexedDB name
     dbCollectionName: 'events',
     dbCollectionKey: 'hash',
 
@@ -763,7 +763,7 @@ function clone(input) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.KeenTracking = exports.Keen = undefined;
+exports.PCTracking = exports.PC = undefined;
 
 var _index = __webpack_require__(2);
 
@@ -824,16 +824,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
   timer: _timer.timer
 });
 
-var Keen = exports.Keen = _index2.default; // deprecated, left for backward compatibility
-var KeenTracking = exports.KeenTracking = _index2.default;
-module.exports = Keen;
+var PC = exports.PC = _index2.default; // deprecated, left for backward compatibility
+var PCTracking = exports.PCTracking = _index2.default;
+module.exports = PC;
 
 /***/ }),
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function(env){
-  var previousKeen = env.Keen || undefined;
+  var previousPC = env.PC || undefined;
   var each = __webpack_require__(0),
       extend = __webpack_require__(1),
       parseParams = __webpack_require__(11),
@@ -855,8 +855,8 @@ module.exports = Keen;
     Client.emit('client', this);
   }
 
-  if (previousKeen && typeof previousKeen.resources === 'undefined') {
-    Client.legacyVersion = previousKeen;
+  if (previousPC && typeof previousPC.resources === 'undefined') {
+    Client.legacyVersion = previousPC;
   }
 
   Emitter(Client);
@@ -875,7 +875,7 @@ module.exports = Keen;
   // Set or extend resources
   Client.resources = Client.resources || {};
   extend(Client.resources, {
-    'base'      : '{protocol}://{host}'
+    'base'      : '{protocol}://{host}/'
   });
 
   // Set or extend utils
@@ -888,7 +888,7 @@ module.exports = Keen;
   });
 
   Client.extendLibrary = function(target, source) {
-    var previous = previousKeen || source;
+    var previous = previousPC || source;
     if (isDefined(previous) && isDefined(previous.resources)) {
       each(previous, function(value, key) {
         if (typeof value === 'object') {
@@ -906,13 +906,13 @@ module.exports = Keen;
 
   Client.log = function(str){
     if (Client.debug && typeof console === 'object') {
-      console.log('[Keen]', str);
+      console.log('[PC]', str);
     }
   };
 
   Client.noConflict = function(){
-    if (typeof env.Keen !== 'undefined') {
-      env.Keen = Client.legacyVersion || previousKeen;
+    if (typeof env.PC !== 'undefined') {
+      env.PC = Client.legacyVersion || previousPC;
     }
     return Client;
   };
@@ -929,9 +929,7 @@ module.exports = Keen;
   Client.prototype.configure = function(obj){
     var config = obj || {};
     this.config = this.config || {
-      projectId    : undefined,
-      writeKey     : undefined,
-      host         : 'analytics.pctest.io',
+      host         : 'clickstream.events',
       protocol     : 'https',
       requestType  : 'jsonp',
       resources    : extend({}, Client.resources)
@@ -1104,7 +1102,7 @@ function serialize(data){
 /* 13 */
 /***/ (function(module) {
 
-module.exports = {"name":"keen-tracking","version":"4.0.15","description":"Track events - custom user actions, clicks, pageviews, purchases.","main":"dist/node/keen-tracking.js","browser":"dist/keen-tracking.js","repository":{"type":"git","url":"https://github.com/keen/keen-tracking.js.git"},"scripts":{"start":"NODE_ENV=development webpack-dev-server","test":"NODE_ENV=test jest && npm run test:node","test:node":"NODE_ENV=test TEST_ENV=node jest","test:watch":"NODE_ENV=test jest --watch","test:node:watch":"NODE_ENV=test TEST_ENV=node jest --watch","build":"NODE_ENV=production webpack -p && NODE_ENV=production OPTIMIZE_MINIMIZE=1 webpack -p && npm run build:node","build:node":"TARGET=node NODE_ENV=production webpack -p","profile":"webpack --profile --json > stats.json","analyze":"webpack-bundle-analyzer stats.json /dist","version":"npm run build && npm run test && git add .","postversion":"git push && git push --tags","demo":"node ./test/demo/index.node.js"},"bugs":"https://github.com/keen/keen-tracking.js/issues","author":"Keen IO <team@keen.io> (https://keen.io/)","homepage":"https://keen.io","keywords":["Tracking","Tracker","Event Tracker","Event tracking","Track events","Page tracking","User tracking","Analytics event tracking","Analytics events","Analytics tracking","Custom events","Analytics","Stats","Statistics","Monitoring","Metrics","Pageviews","Segmentation","Funnel","Conversion","Log","Logger","Logging","Javascript events","Universal tracking","Click analytics"],"contributors":["Dustin Larimer <dustin@keen.io> (https://github.com/dustinlarimer)","Eric Anderson <eric@keen.io> (https://github.com/aroc)","Joe Wegner <joe@keen.io> (http://www.wegnerdesign.com)","Alex Kleissner <alex@keen.io> (https://github.com/hex337)","Adam Kasprowicz <adam.kasprowicz@keen.io> (https://github.com/adamkasprowicz)"],"license":"MIT","dependencies":{"component-emitter":"^1.2.0","js-cookie":"2.1.0","promise-polyfill":"^8.0.0","whatwg-fetch":"^2.0.4"},"devDependencies":{"babel-core":"^6.26.3","babel-jest":"^23.0.1","babel-loader":"^7.1.5","babel-plugin-transform-es2015-modules-commonjs":"^6.26.2","babel-plugin-transform-object-rest-spread":"^6.26.0","babel-polyfill":"^6.26.0","babel-preset-env":"^1.7.0","babel-preset-es2015":"^6.24.1","babel-preset-stage-0":"^6.24.1","eslint":"^4.19.1","eslint-config-airbnb":"^16.1.0","eslint-loader":"^2.0.0","eslint-plugin-import":"^2.11.0","eslint-plugin-jsx-a11y":"^6.0.3","html-loader":"^0.5.5","html-webpack-plugin":"^3.2.0","jest":"^22.4.3","jest-fetch-mock":"^1.6.5","merge":"^1.2.1","nock":"^9.2.6","regenerator-runtime":"^0.11.1","replace-in-file":"^3.4.0","url-parse":"^1.4.3","webpack":"^4.5.0","webpack-bundle-analyzer":"^2.11.1","webpack-cli":"^3.1.2","webpack-dev-server":"^3.1.1","xhr-mock":"^2.3.2"}};
+module.exports = {"name":"pc-tracking","version":"4.0.15","description":"Track events - custom user actions, clicks, pageviews, purchases.","main":"dist/node/pc-tracking.js","browser":"dist/pc-tracking.js","repository":{"type":"git","url":"https://github.com/pc/pc-tracking.js.git"},"scripts":{"start":"NODE_ENV=development webpack-dev-server","test":"NODE_ENV=test jest && npm run test:node","test:node":"NODE_ENV=test TEST_ENV=node jest","test:watch":"NODE_ENV=test jest --watch","test:node:watch":"NODE_ENV=test TEST_ENV=node jest --watch","build":"NODE_ENV=production webpack -p && NODE_ENV=production OPTIMIZE_MINIMIZE=1 webpack -p && npm run build:node","build:node":"TARGET=node NODE_ENV=production webpack -p","profile":"webpack --profile --json > stats.json","analyze":"webpack-bundle-analyzer stats.json /dist","version":"npm run build && npm run test && git add .","postversion":"git push && git push --tags","demo":"node ./test/demo/index.node.js"},"bugs":"https://github.com/pc/pc-tracking.js/issues","author":"PC IO <team@pc.io> (https://pc.io/)","homepage":"https://pc.io","keywords":["Tracking","Tracker","Event Tracker","Event tracking","Track events","Page tracking","User tracking","Analytics event tracking","Analytics events","Analytics tracking","Custom events","Analytics","Stats","Statistics","Monitoring","Metrics","Pageviews","Segmentation","Funnel","Conversion","Log","Logger","Logging","Javascript events","Universal tracking","Click analytics"],"contributors":["Dustin Larimer <dustin@pc.io> (https://github.com/dustinlarimer)","Eric Anderson <eric@pc.io> (https://github.com/aroc)","Joe Wegner <joe@pc.io> (http://www.wegnerdesign.com)","Alex Kleissner <alex@pc.io> (https://github.com/hex337)","Adam Kasprowicz <adam.kasprowicz@pc.io> (https://github.com/adamkasprowicz)"],"license":"MIT","dependencies":{"component-emitter":"^1.2.0","js-cookie":"2.1.0","promise-polyfill":"^8.0.0","whatwg-fetch":"^2.0.4"},"devDependencies":{"babel-core":"^6.26.3","babel-jest":"^23.0.1","babel-loader":"^7.1.5","babel-plugin-transform-es2015-modules-commonjs":"^6.26.2","babel-plugin-transform-object-rest-spread":"^6.26.0","babel-polyfill":"^6.26.0","babel-preset-env":"^1.7.0","babel-preset-es2015":"^6.24.1","babel-preset-stage-0":"^6.24.1","eslint":"^4.19.1","eslint-config-airbnb":"^16.1.0","eslint-loader":"^2.0.0","eslint-plugin-import":"^2.11.0","eslint-plugin-jsx-a11y":"^6.0.3","html-loader":"^0.5.5","html-webpack-plugin":"^3.2.0","jest":"^22.4.3","jest-fetch-mock":"^1.6.5","merge":"^1.2.1","nock":"^9.2.6","regenerator-runtime":"^0.11.1","replace-in-file":"^3.4.0","url-parse":"^1.4.3","webpack":"^4.5.0","webpack-bundle-analyzer":"^2.11.1","webpack-cli":"^3.1.2","webpack-dev-server":"^3.1.1","xhr-mock":"^2.3.2"}};
 
 /***/ }),
 /* 14 */
@@ -1208,7 +1206,7 @@ function recordEvent(eventCollectionOrConfigObject, eventBody, callback) {
   this.emit('recordEvent', eventCollection, extendedEventBody);
 
   if (!_index2.default.enabled) {
-    handleValidationError.call(this, 'Keen.enabled is set to false.', callback);
+    handleValidationError.call(this, 'PC.enabled is set to false.', callback);
     return false;
   }
 
@@ -1256,7 +1254,7 @@ function recordEvents(eventsHash, callback) {
   this.emit('recordEvents', extendedEventsHash);
 
   if (!_index2.default.enabled) {
-    handleValidationError.call(this, 'Keen.enabled is set to false.', callback);
+    handleValidationError.call(this, 'PC.enabled is set to false.', callback);
     return false;
   }
 
@@ -1269,11 +1267,11 @@ function recordEvents(eventsHash, callback) {
 
 function checkValidation(callback) {
   if (!this.projectId()) {
-    handleValidationError.call(this, 'Keen.Client is missing a projectId property.', callback);
+    handleValidationError.call(this, 'PC.Client is missing a projectId property.', callback);
     return false;
   }
   if (!this.writeKey()) {
-    handleValidationError.call(this, 'Keen.Client is missing a writeKey property.', callback);
+    handleValidationError.call(this, 'PC.Client is missing a writeKey property.', callback);
     return false;
   }
   return true;
@@ -1790,4 +1788,4 @@ timer.prototype.clear = function () {
 /***/ })
 /******/ ]);
 });
-//# sourceMappingURL=keen-tracking.js.map
+//# sourceMappingURL=pc-tracking.js.map
