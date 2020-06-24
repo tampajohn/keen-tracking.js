@@ -7,7 +7,7 @@
 		var a = typeof exports === 'object' ? factory(require("component-emitter")) : factory(root["component-emitter"]);
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
-})(global, function(__WEBPACK_EXTERNAL_MODULE__5__) {
+})(global, function(__WEBPACK_EXTERNAL_MODULE__22__, __WEBPACK_EXTERNAL_MODULE__23__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -91,7 +91,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 9);
+/******/ 	return __webpack_require__(__webpack_require__.s = 24);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -659,11 +659,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-exports.extendEvent = extendEvent;
-exports.extendEvents = extendEvents;
-exports.getExtendedEventBody = getExtendedEventBody;
+var _keenCore = __webpack_require__(23);
 
 var _deepExtend = __webpack_require__(8);
 
@@ -671,16 +667,55 @@ var _each = __webpack_require__(0);
 
 var _each2 = _interopRequireDefault(_each);
 
+var _extend = __webpack_require__(3);
+
+var _extend2 = _interopRequireDefault(_extend);
+
+var _queue = __webpack_require__(8);
+
+var _optOut = __webpack_require__(21);
+
+var _package = __webpack_require__(7);
+
+var _package2 = _interopRequireDefault(_package);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function extendEvent(eventCollection, eventModifier) {
-  if (arguments.length !== 2 || typeof eventCollection !== 'string' || 'object' !== (typeof eventModifier === 'undefined' ? 'undefined' : _typeof(eventModifier)) && 'function' !== typeof eventModifier) {
-    handleValidationError.call(this, 'Incorrect arguments provided to #extendEvent method');
-    return;
+_keenCore2.default.helpers = _keenCore2.default.helpers || {};
+_keenCore2.default.prototype.observers = _keenCore2.default.observers || {};
+
+// Install internal queue
+_keenCore2.default.on('client', function (client) {
+  client.extensions = {
+    events: [],
+    collections: {}
+  };
+
+  if (!client.config.respectDoNotTrack) {
+    this.doNotTrack = false;
   }
-  this.extensions.collections[eventCollection] = this.extensions.collections[eventCollection] || [];
-  this.extensions.collections[eventCollection].push(eventModifier);
-  this.emit('extendEvent', eventCollection, eventModifier);
+
+  if (typeof client.config.optOut !== 'undefined') {
+    (0, _optOut.setOptOut)(client.config.optOut);
+    this.optedOut = client.config.optOut;
+  }
+
+  client.queue = (0, _queue.queue)(client.config.queue);
+  client.queue.on('flush', function () {
+    client.recordDeferredEvents();
+  });
+});
+
+// Accessors
+_keenCore2.default.prototype.writeKey = function (str) {
+  if (!arguments.length) return this.config.writeKey;
+  this.config.writeKey = str ? String(str) : null;
+  return this;
+};
+
+_keenCore2.default.prototype.referrerPolicy = function (str) {
+  if (!arguments.length) return this.config.referrerPolicy;
+  this.config.referrerPolicy = str ? String(str) : null;
   return this;
 }
 
@@ -783,7 +818,15 @@ var _getDatetimeIndex = __webpack_require__(22);
 
 var _getUniqueId = __webpack_require__(23);
 
-var _deepExtend = __webpack_require__(8);
+/***/ }),
+/* 7 */
+/***/ (function(module) {
+
+module.exports = {"name":"keen-tracking","version":"4.5.0","description":"Track events - custom user actions, clicks, pageviews, purchases.","main":"dist/node/keen-tracking.js","browser":"dist/keen-tracking.js","repository":{"type":"git","url":"https://github.com/keen/keen-tracking.js.git"},"scripts":{"start":"NODE_ENV=development webpack-dev-server","test":"NODE_ENV=test jest && npm run test:node","test:node":"NODE_ENV=test TEST_ENV=node jest","test:watch":"NODE_ENV=test jest --watch","test:node:watch":"NODE_ENV=test TEST_ENV=node jest --watch","build":"NODE_ENV=production webpack -p && NODE_ENV=production OPTIMIZE_MINIMIZE=1 webpack -p && npm run build:node","build:node":"TARGET=node NODE_ENV=production webpack -p","profile":"webpack --profile --json > stats.json","analyze":"webpack-bundle-analyzer stats.json /dist","preversion":"npm run build:node && npm run test","version":"npm run build && git add .","postversion":"git push && git push --tags && npm publish","demo":"node ./test/demo/index.node.js"},"bugs":"https://github.com/keen/keen-tracking.js/issues","author":"Keen IO <team@keen.io> (https://keen.io/)","homepage":"https://keen.io","keywords":["Tracking","Tracker","Event Tracker","Event tracking","Track events","Page tracking","User tracking","Analytics event tracking","Analytics events","Analytics tracking","Custom events","Analytics","Stats","Statistics","Monitoring","Metrics","Pageviews","Segmentation","Funnel","Conversion","Log","Logger","Logging","Javascript events","Universal tracking","Click analytics"],"contributors":["Dustin Larimer <dustin@keen.io> (https://github.com/dustinlarimer)","Eric Anderson <eric@keen.io> (https://github.com/aroc)","Joe Wegner <joe@keen.io> (http://www.wegnerdesign.com)","Alex Kleissner <alex@keen.io> (https://github.com/hex337)","Adam Kasprowicz <adam.kasprowicz@keen.io> (https://github.com/adamkasprowicz)","Dariusz Łacheta <dariusz.lacheta@keen.io> (https://github.com/dariuszlacheta)"],"license":"MIT","dependencies":{"component-emitter":"^1.2.0","js-cookie":"2.1.0","keen-core":"^0.1.3","promise-polyfill":"^8.0.0","whatwg-fetch":"^2.0.4"},"devDependencies":{"babel-core":"^6.26.3","babel-jest":"^23.0.1","babel-loader":"^7.1.5","babel-plugin-transform-es2015-modules-commonjs":"^6.26.2","babel-plugin-transform-object-rest-spread":"^6.26.0","babel-polyfill":"^6.26.0","babel-preset-env":"^1.7.0","babel-preset-es2015":"^6.24.1","babel-preset-stage-0":"^6.24.1","eslint":"^4.19.1","eslint-config-airbnb":"^16.1.0","eslint-loader":"^2.0.0","eslint-plugin-import":"^2.11.0","eslint-plugin-jsx-a11y":"^6.0.3","html-loader":"^0.5.5","html-webpack-plugin":"^3.2.0","jest":"^22.4.3","jest-fetch-mock":"^1.6.5","merge":"^1.2.1","nock":"^9.2.6","regenerator-runtime":"^0.11.1","replace-in-file":"^3.4.0","url-parse":"^1.4.3","webpack":"^4.5.0","webpack-bundle-analyzer":"^3.3.2","webpack-cli":"^2.0.13","webpack-dev-server":"^3.1.14","xhr-mock":"^2.3.2"}};
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
 
 var _timer = __webpack_require__(24);
 
@@ -816,13 +859,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
   getUniqueId: _getUniqueId.getUniqueId
 });
 
-// ------------------------
-// Utils
-// ------------------------
-(0, _extend2.default)(_index2.default.utils, {
-  deepExtend: _deepExtend.deepExtend,
-  timer: _timer.timer
-});
+var _componentEmitter = __webpack_require__(22);
 
 var Keen = exports.Keen = _index2.default; // deprecated, left for backward compatibility
 var KeenTracking = exports.KeenTracking = _index2.default;
@@ -878,14 +915,9 @@ module.exports = Keen;
     'base'      : '{protocol}://{host}'
   });
 
-  // Set or extend utils
-  Client.utils = Client.utils || {};
-  extend(Client.utils, {
-    'each'        : each,
-    'extend'      : extend,
-    'parseParams' : parseParams,
-    'serialize'   : serialize
-  });
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
 
   Client.extendLibrary = function(target, source) {
     var previous = previousKeen || source;
@@ -946,9 +978,9 @@ module.exports = Keen;
       config.host.replace(/.*?:\/\//g, '');
     }
 
-    extend(this.config, config);
-    return this;
-  };
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
 
   Client.prototype.masterKey = function(str){
     if (!arguments.length) return this.config.masterKey;
@@ -1059,28 +1091,6 @@ module.exports = Keen;
 
 /***/ }),
 /* 11 */
-/***/ (function(module, exports) {
-
-module.exports = parseParams;
-
-function parseParams(str){
-  // via: http://stackoverflow.com/a/2880929/2511985
-  var urlParams = {},
-      match,
-      pl     = /\+/g,  // Regex for replacing addition symbol with a space
-      search = /([^&=]+)=?([^&]*)/g,
-      decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
-      query  = str.split("?")[1];
-
-  while (!!(match=search.exec(query))) {
-    urlParams[decode(match[1])] = decode(match[2]);
-  }
-  return urlParams;
-};
-
-
-/***/ }),
-/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var each = __webpack_require__(0),
@@ -1101,13 +1111,7 @@ function serialize(data){
 
 
 /***/ }),
-/* 13 */
-/***/ (function(module) {
-
-module.exports = {"name":"keen-tracking","version":"4.0.15","description":"Track events - custom user actions, clicks, pageviews, purchases.","main":"dist/node/keen-tracking.js","browser":"dist/keen-tracking.js","repository":{"type":"git","url":"https://github.com/keen/keen-tracking.js.git"},"scripts":{"start":"NODE_ENV=development webpack-dev-server","test":"NODE_ENV=test jest && npm run test:node","test:node":"NODE_ENV=test TEST_ENV=node jest","test:watch":"NODE_ENV=test jest --watch","test:node:watch":"NODE_ENV=test TEST_ENV=node jest --watch","build":"NODE_ENV=production webpack -p && NODE_ENV=production OPTIMIZE_MINIMIZE=1 webpack -p && npm run build:node","build:node":"TARGET=node NODE_ENV=production webpack -p","profile":"webpack --profile --json > stats.json","analyze":"webpack-bundle-analyzer stats.json /dist","version":"npm run build && npm run test && git add .","postversion":"git push && git push --tags","demo":"node ./test/demo/index.node.js"},"bugs":"https://github.com/keen/keen-tracking.js/issues","author":"Keen IO <team@keen.io> (https://keen.io/)","homepage":"https://keen.io","keywords":["Tracking","Tracker","Event Tracker","Event tracking","Track events","Page tracking","User tracking","Analytics event tracking","Analytics events","Analytics tracking","Custom events","Analytics","Stats","Statistics","Monitoring","Metrics","Pageviews","Segmentation","Funnel","Conversion","Log","Logger","Logging","Javascript events","Universal tracking","Click analytics"],"contributors":["Dustin Larimer <dustin@keen.io> (https://github.com/dustinlarimer)","Eric Anderson <eric@keen.io> (https://github.com/aroc)","Joe Wegner <joe@keen.io> (http://www.wegnerdesign.com)","Alex Kleissner <alex@keen.io> (https://github.com/hex337)","Adam Kasprowicz <adam.kasprowicz@keen.io> (https://github.com/adamkasprowicz)"],"license":"MIT","dependencies":{"component-emitter":"^1.2.0","js-cookie":"2.1.0","promise-polyfill":"^8.0.0","whatwg-fetch":"^2.0.4"},"devDependencies":{"babel-core":"^6.26.3","babel-jest":"^23.0.1","babel-loader":"^7.1.5","babel-plugin-transform-es2015-modules-commonjs":"^6.26.2","babel-plugin-transform-object-rest-spread":"^6.26.0","babel-polyfill":"^6.26.0","babel-preset-env":"^1.7.0","babel-preset-es2015":"^6.24.1","babel-preset-stage-0":"^6.24.1","eslint":"^4.19.1","eslint-config-airbnb":"^16.1.0","eslint-loader":"^2.0.0","eslint-plugin-import":"^2.11.0","eslint-plugin-jsx-a11y":"^6.0.3","html-loader":"^0.5.5","html-webpack-plugin":"^3.2.0","jest":"^22.4.3","jest-fetch-mock":"^1.6.5","merge":"^1.2.1","nock":"^9.2.6","regenerator-runtime":"^0.11.1","replace-in-file":"^3.4.0","url-parse":"^1.4.3","webpack":"^4.5.0","webpack-bundle-analyzer":"^2.11.1","webpack-cli":"^3.1.2","webpack-dev-server":"^3.1.1","xhr-mock":"^2.3.2"}};
-
-/***/ }),
-/* 14 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1134,19 +1138,7 @@ var _each = __webpack_require__(0);
 
 var _each2 = _interopRequireDefault(_each);
 
-var _extend = __webpack_require__(1);
-
-var _extend2 = _interopRequireDefault(_extend);
-
-var _extendEvents = __webpack_require__(7);
-
-var _nodeRequestRetry = __webpack_require__(15);
-
-var _nodeRequestRetry2 = _interopRequireDefault(_nodeRequestRetry);
-
-var _unique = __webpack_require__(18);
-
-var _unique2 = _interopRequireDefault(_unique);
+var _queue = __webpack_require__(8);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1205,7 +1197,9 @@ function recordEvent(eventCollectionOrConfigObject, eventBody, callback) {
     });
   }
 
-  this.emit('recordEvent', eventCollection, extendedEventBody);
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
 
   if (!_index2.default.enabled) {
     handleValidationError.call(this, 'Keen.enabled is set to false.', callback);
@@ -1219,9 +1213,9 @@ function recordEvent(eventCollectionOrConfigObject, eventBody, callback) {
 // .recordEvents
 // ------------------------------
 
-function recordEvents(eventsHash, callback) {
-  var self = this;
-  var extendedEventsHash = {};
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
 
   if (!checkValidation.call(this, callback)) {
     return;
@@ -1232,26 +1226,75 @@ function recordEvents(eventsHash, callback) {
     return;
   }
 
-  // ------------------------------
-  // Run extendEvent(s) transforms
-  // ------------------------------
-  (0, _each2.default)(eventsHash, function (eventList, eventCollection) {
-    // Find or create collection on new hash
-    extendedEventsHash[eventCollection] = extendedEventsHash[eventCollection] || [];
-    // Loop over each eventBody in the existing hash
-    (0, _each2.default)(eventList, function (eventBody, index) {
-      // Create a new data object
-      var extendedEventBody = {};
-      // Process "events" transform pipeline
-      (0, _extendEvents.getExtendedEventBody)(extendedEventBody, self.extensions.events);
-      // Process "collection" transform pipeline
-      (0, _extendEvents.getExtendedEventBody)(extendedEventBody, self.extensions.collections[eventCollection]);
-      // Blend existing eventBody data into the result
-      (0, _extendEvents.getExtendedEventBody)(extendedEventBody, [eventBody]);
-      // Push extendedEventBody into new hash
-      extendedEventsHash[eventCollection].push(extendedEventBody);
-    });
-  });
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var MD5 = exports.MD5 = function MD5(d) {
+  var result = M(V(Y(X(d), 8 * d.length)));return result.toLowerCase();
+};function M(d) {
+  for (var _, m = "0123456789ABCDEF", f = "", r = 0; r < d.length; r++) {
+    _ = d.charCodeAt(r), f += m.charAt(_ >>> 4 & 15) + m.charAt(15 & _);
+  }return f;
+}function X(d) {
+  for (var _ = Array(d.length >> 2), m = 0; m < _.length; m++) {
+    _[m] = 0;
+  }for (m = 0; m < 8 * d.length; m += 8) {
+    _[m >> 5] |= (255 & d.charCodeAt(m / 8)) << m % 32;
+  }return _;
+}function V(d) {
+  for (var _ = "", m = 0; m < 32 * d.length; m += 8) {
+    _ += String.fromCharCode(d[m >> 5] >>> m % 32 & 255);
+  }return _;
+}function Y(d, _) {
+  d[_ >> 5] |= 128 << _ % 32, d[14 + (_ + 64 >>> 9 << 4)] = _;for (var m = 1732584193, f = -271733879, r = -1732584194, i = 271733878, n = 0; n < d.length; n += 16) {
+    var h = m,
+        t = f,
+        g = r,
+        e = i;f = md5_ii(f = md5_ii(f = md5_ii(f = md5_ii(f = md5_hh(f = md5_hh(f = md5_hh(f = md5_hh(f = md5_gg(f = md5_gg(f = md5_gg(f = md5_gg(f = md5_ff(f = md5_ff(f = md5_ff(f = md5_ff(f, r = md5_ff(r, i = md5_ff(i, m = md5_ff(m, f, r, i, d[n + 0], 7, -680876936), f, r, d[n + 1], 12, -389564586), m, f, d[n + 2], 17, 606105819), i, m, d[n + 3], 22, -1044525330), r = md5_ff(r, i = md5_ff(i, m = md5_ff(m, f, r, i, d[n + 4], 7, -176418897), f, r, d[n + 5], 12, 1200080426), m, f, d[n + 6], 17, -1473231341), i, m, d[n + 7], 22, -45705983), r = md5_ff(r, i = md5_ff(i, m = md5_ff(m, f, r, i, d[n + 8], 7, 1770035416), f, r, d[n + 9], 12, -1958414417), m, f, d[n + 10], 17, -42063), i, m, d[n + 11], 22, -1990404162), r = md5_ff(r, i = md5_ff(i, m = md5_ff(m, f, r, i, d[n + 12], 7, 1804603682), f, r, d[n + 13], 12, -40341101), m, f, d[n + 14], 17, -1502002290), i, m, d[n + 15], 22, 1236535329), r = md5_gg(r, i = md5_gg(i, m = md5_gg(m, f, r, i, d[n + 1], 5, -165796510), f, r, d[n + 6], 9, -1069501632), m, f, d[n + 11], 14, 643717713), i, m, d[n + 0], 20, -373897302), r = md5_gg(r, i = md5_gg(i, m = md5_gg(m, f, r, i, d[n + 5], 5, -701558691), f, r, d[n + 10], 9, 38016083), m, f, d[n + 15], 14, -660478335), i, m, d[n + 4], 20, -405537848), r = md5_gg(r, i = md5_gg(i, m = md5_gg(m, f, r, i, d[n + 9], 5, 568446438), f, r, d[n + 14], 9, -1019803690), m, f, d[n + 3], 14, -187363961), i, m, d[n + 8], 20, 1163531501), r = md5_gg(r, i = md5_gg(i, m = md5_gg(m, f, r, i, d[n + 13], 5, -1444681467), f, r, d[n + 2], 9, -51403784), m, f, d[n + 7], 14, 1735328473), i, m, d[n + 12], 20, -1926607734), r = md5_hh(r, i = md5_hh(i, m = md5_hh(m, f, r, i, d[n + 5], 4, -378558), f, r, d[n + 8], 11, -2022574463), m, f, d[n + 11], 16, 1839030562), i, m, d[n + 14], 23, -35309556), r = md5_hh(r, i = md5_hh(i, m = md5_hh(m, f, r, i, d[n + 1], 4, -1530992060), f, r, d[n + 4], 11, 1272893353), m, f, d[n + 7], 16, -155497632), i, m, d[n + 10], 23, -1094730640), r = md5_hh(r, i = md5_hh(i, m = md5_hh(m, f, r, i, d[n + 13], 4, 681279174), f, r, d[n + 0], 11, -358537222), m, f, d[n + 3], 16, -722521979), i, m, d[n + 6], 23, 76029189), r = md5_hh(r, i = md5_hh(i, m = md5_hh(m, f, r, i, d[n + 9], 4, -640364487), f, r, d[n + 12], 11, -421815835), m, f, d[n + 15], 16, 530742520), i, m, d[n + 2], 23, -995338651), r = md5_ii(r, i = md5_ii(i, m = md5_ii(m, f, r, i, d[n + 0], 6, -198630844), f, r, d[n + 7], 10, 1126891415), m, f, d[n + 14], 15, -1416354905), i, m, d[n + 5], 21, -57434055), r = md5_ii(r, i = md5_ii(i, m = md5_ii(m, f, r, i, d[n + 12], 6, 1700485571), f, r, d[n + 3], 10, -1894986606), m, f, d[n + 10], 15, -1051523), i, m, d[n + 1], 21, -2054922799), r = md5_ii(r, i = md5_ii(i, m = md5_ii(m, f, r, i, d[n + 8], 6, 1873313359), f, r, d[n + 15], 10, -30611744), m, f, d[n + 6], 15, -1560198380), i, m, d[n + 13], 21, 1309151649), r = md5_ii(r, i = md5_ii(i, m = md5_ii(m, f, r, i, d[n + 4], 6, -145523070), f, r, d[n + 11], 10, -1120210379), m, f, d[n + 2], 15, 718787259), i, m, d[n + 9], 21, -343485551), m = safe_add(m, h), f = safe_add(f, t), r = safe_add(r, g), i = safe_add(i, e);
+  }return Array(m, f, r, i);
+}function md5_cmn(d, _, m, f, r, i) {
+  return safe_add(bit_rol(safe_add(safe_add(_, d), safe_add(f, i)), r), m);
+}function md5_ff(d, _, m, f, r, i, n) {
+  return md5_cmn(_ & m | ~_ & f, d, _, r, i, n);
+}function md5_gg(d, _, m, f, r, i, n) {
+  return md5_cmn(_ & f | m & ~f, d, _, r, i, n);
+}function md5_hh(d, _, m, f, r, i, n) {
+  return md5_cmn(_ ^ m ^ f, d, _, r, i, n);
+}function md5_ii(d, _, m, f, r, i, n) {
+  return md5_cmn(m ^ (_ | ~f), d, _, r, i, n);
+}function safe_add(d, _) {
+  var m = (65535 & d) + (65535 & _);return (d >> 16) + (_ >> 16) + (m >> 16) << 16 | 65535 & m;
+}function bit_rol(d, _) {
+  return d << _ | d >>> 32 - _;
+}
+
+exports.default = MD5;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.isUnique = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+__webpack_require__(1);
+
+var _md = __webpack_require__(14);
+
+var _md2 = _interopRequireDefault(_md);
+
+var _cacheBrowser = __webpack_require__(13);
+
+var _configDefault = __webpack_require__(2);
+
+var _configDefault2 = _interopRequireDefault(_configDefault);
 
   this.emit('recordEvents', extendedEventsHash);
 
@@ -1287,21 +1330,15 @@ function handleValidationError(message, cb) {
   }
 }
 
-function sendEventData(path, eventData, callback) {
-  var data = JSON.stringify(eventData);
+/***/ }),
+/* 16 */
+/***/ (function(module, exports) {
 
   var urlPath = this.url('events', path).replace(this.config.protocol + '://' + this.config.host, '');
 
-  var config = _extends({
-    host: this.config.host,
-    path: urlPath,
-    method: 'POST',
-    headers: {
-      'Authorization': this.writeKey(),
-      'Content-Type': 'application/json',
-      'Content-Length': Buffer.byteLength(data)
-    }
-  }, this.config.nodeRequestConfig);
+/***/ }),
+/* 17 */
+/***/ (function(module, exports) {
 
   return (0, _nodeRequestRetry2.default)({
     retry: this.config.retry,
@@ -1313,7 +1350,7 @@ function sendEventData(path, eventData, callback) {
 }
 
 /***/ }),
-/* 15 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1416,11 +1453,11 @@ exports.default = function (options) {
 
 __webpack_require__(4);
 
-var _http = __webpack_require__(16);
+var _http = __webpack_require__(17);
 
 var _http2 = _interopRequireDefault(_http);
 
-var _https = __webpack_require__(17);
+var _https = __webpack_require__(16);
 
 var _https2 = _interopRequireDefault(_https);
 
@@ -1433,19 +1470,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 ;
 
 /***/ }),
-/* 16 */
-/***/ (function(module, exports) {
-
-module.exports = require("http");
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports) {
-
-module.exports = require("https");
-
-/***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1464,7 +1489,9 @@ var _md = __webpack_require__(19);
 
 var _md2 = _interopRequireDefault(_md);
 
-var _cacheBrowser = __webpack_require__(20);
+var _package = __webpack_require__(7);
+
+var _each = __webpack_require__(0);
 
 var _configDefault = __webpack_require__(3);
 
@@ -1474,10 +1501,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var uniqueIds = [];
 
-var isUnique = exports.isUnique = function isUnique(customCacheConfig, extendedEventBody) {
-  var configCache = _extends({}, _configDefault2.default.cache, customCacheConfig.cache);
-  var stringifiedEvent = JSON.stringify(extendedEventBody);
-  var hashingMethod = configCache.hashingMethod;
+var _nodeRequestRetry = __webpack_require__(18);
 
   var hash = hashingMethod && hashingMethod.toLowerCase() === 'md5' ? (0, _md2.default)(stringifiedEvent) : stringifiedEvent;
   var expiryTime = configCache.maxAge ? Date.now() + configCache.maxAge : undefined;
@@ -1492,28 +1516,7 @@ var isUnique = exports.isUnique = function isUnique(customCacheConfig, extendedE
     });
   }
 
-  var alreadySentEvent = uniqueIds.find(function (item) {
-    return item.hash === hash;
-  });
-  if (alreadySentEvent) {
-    if (alreadySentEvent.expiryTime && alreadySentEvent.expiryTime < Date.now()) {
-      uniqueIds = uniqueIds.filter(function (item) {
-        return item.hash !== hash;
-      });
-    } else {
-      return Promise.resolve(false);
-    }
-  }
-  uniqueIds.push(item);
-  if (configCache.storage && configCache.storage.toLowerCase() === 'indexeddb') {
-    return (0, _cacheBrowser.getFromCache)(hash, configCache).then(function (alreadySentEvent) {
-      if (alreadySentEvent) {
-        return false;
-      }
-      (0, _cacheBrowser.saveToCache)(hash, configCache);
-      return true;
-    });
-  }
+var _unique = __webpack_require__(15);
 
   return Promise.resolve(true);
 };
@@ -1642,114 +1645,118 @@ function deferEvents(eventsHash) {
     return;
   }
 
-  (0, _each2.default)(eventsHash, function (eventList, eventCollection) {
-    self.queue.events[eventCollection] = self.queue.events[eventCollection] || [];
-    self.queue.events[eventCollection] = self.queue.events[eventCollection].concat(eventList);
-    self.queue.capacity = self.queue.capacity + eventList.length;
-    if (!self.queue.timer) {
-      self.queue.start();
+  var config = _extends({
+    host: this.config.host,
+    path: urlPath,
+    method: 'POST',
+    headers: {
+      'Authorization': this.writeKey(),
+      'Content-Type': 'application/json',
+      'Content-Length': Buffer.byteLength(data),
+      'keen-sdk': 'javascript-' + _package.version
     }
   });
   self.emit('deferEvents', eventsHash);
   return self;
 }
 
-function queueCapacity(num) {
-  if (!arguments.length) return this.queue.config.capacity;
-  this.queue.config.capacity = num ? Number(num) : 0;
-  this.queue.check();
-  return this;
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+function lsTest() {
+    var test = 'test';
+    try {
+        localStorage.setItem(test, test);
+        localStorage.removeItem(test);
+        return true;
+    } catch (e) {
+        return false;
+    }
 }
 
-function queueInterval(num) {
-  if (!arguments.length) return this.queue.config.interval;
-  this.queue.config.interval = num ? Number(num) : 0;
-  this.queue.check();
-  return this;
-}
+var isLocalStorageAvailable = exports.isLocalStorageAvailable = lsTest();
 
-function recordDeferredEvents() {
-  var self = this;
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
 
-  if (self.queue.capacity > 0) {
-    self.queue.pause();
-    var clonedQueueConfig = _extends({}, self.queue.config);
-    var clonedQueueEvents = _extends({}, self.queue.events);
-    self.queue = (0, _queue.queue)();
-    self.queue.config = clonedQueueConfig;
-    self.queue.on('flush', function () {
-      self.recordDeferredEvents();
-    });
-    self.emit('recordDeferredEvents', clonedQueueEvents);
-    self.recordEvents(clonedQueueEvents, function (err, res) {
-      if (err) {
-        self.emit('recordDeferredEventsError', err, clonedQueueEvents);
-      }
-    });
-  }
-  return self;
-}
+"use strict";
 
-function handleValidationError(message) {
-  this.emit('error', 'Event(s) not deferred: ' + message);
-}
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.setOptOut = setOptOut;
+
+var _localStorage = __webpack_require__(20);
+
+function setOptOut() {
+    var optOut = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+    if (!_localStorage.isLocalStorageAvailable) return;
+
+    if (optOut) {
+        localStorage.setItem('optout', optOut);
+        return;
+    }
+
+    localStorage.removeItem('optout');
+};
 
 /***/ }),
 /* 22 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.getDatetimeIndex = getDatetimeIndex;
-function getDatetimeIndex(input) {
-  var date = input || new Date();
-  return {
-    'hour_of_day': date.getHours(),
-    'day_of_week': parseInt(1 + date.getDay()),
-    'day_of_month': date.getDate(),
-    'month': parseInt(1 + date.getMonth()),
-    'year': date.getFullYear()
-  };
-}
+module.exports = __WEBPACK_EXTERNAL_MODULE__22__;
 
 /***/ }),
 /* 23 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.getUniqueId = getUniqueId;
-function getUniqueId() {
-  // uuidv4
-  if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
-    // browser
-    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, function (c) {
-      return (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16);
-    });
-  } else {
-    // node & older browsers
-    var str = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
-    return str.replace(/[xy]/g, function (c) {
-      var r = Math.random() * 16 | 0,
-          v = c == 'x' ? r : r & 0x3 | 0x8;
-      return v.toString(16);
-    });
-  }
-}
+module.exports = __WEBPACK_EXTERNAL_MODULE__23__;
 
 /***/ }),
 /* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.KeenTracking = exports.Keen = undefined;
+
+var _index = __webpack_require__(4);
+
+var _index2 = _interopRequireDefault(_index);
+
+var _extend = __webpack_require__(3);
+
+var _extend2 = _interopRequireDefault(_extend);
+
+var _recordEventsServer = __webpack_require__(19);
+
+var _deferEvents = __webpack_require__(12);
+
+"use strict";
+
+var _getDatetimeIndex = __webpack_require__(11);
+
+var _getUniqueId = __webpack_require__(10);
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _timer = __webpack_require__(9);
 
 
 Object.defineProperty(exports, "__esModule", {

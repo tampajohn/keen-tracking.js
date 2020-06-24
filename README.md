@@ -3,6 +3,14 @@
 A JavaScript tracking library for [PC](https://pc.io).
 Track events, user actions, clicks, pageviews, conversions and more!
 
+<a href="https://keen.io/"><img src="https://img.shields.io/github/release/keen/keen-tracking.js.svg?style=flat-square&maxAge=600" alt=""></a>
+<a href="https://github.com/keen/keen-tracking.js/graphs/contributors" alt="Contributors"><img src="https://img.shields.io/github/contributors/keen/keen-tracking.js.svg" /></a>
+<a href="https://github.com/keen/keen-tracking.js/pulse" alt="Activity"><img src="https://img.shields.io/github/last-commit/keen/keen-tracking.js.svg" /></a>
+![](https://img.shields.io/github/license/keen/keen-tracking.js.svg)
+<a href="http://slack.keen.io/"><img src="https://img.shields.io/badge/slack-keen-orange.svg?style=flat-square&maxAge=3600" alt="Slack"></a>
+<a href="https://www.jsdelivr.com/package/npm/keen-tracking"><img src="https://data.jsdelivr.com/v1/package/npm/keen-tracking/badge" alt=""></a>
+<a href="https://www.npmjs.com/package/keen-tracking"><img src="https://img.shields.io/npm/dm/keen-tracking.svg" alt=""></a>
+
 ### Installation
 
 Install this package from NPM *Recommended*
@@ -11,7 +19,7 @@ Install this package from NPM *Recommended*
 npm install pc-tracking --save
 ```
 
-Or load it from public CDN
+Public CDN
 
 ```html
 <script crossorigin src="https://cdn.jsdelivr.net/npm/pc-tracking@4"></script>
@@ -66,12 +74,12 @@ client
 
 ### Automated Event Tracking
 
-Automatically record `pageviews`, `clicks`, and `form_submissions` events with robust data models:
+Automatically record `pageviews`, `clicks`, `form_submissions` and `element_views` events with robust data models:
 
 ```html
 <script>
-  (function(name,path,ctx){ctx[name]=ctx[name]||{ready:function(fn){var h=document.getElementsByTagName('head')[0],s=document.createElement('script'),w=window,loaded;s.onload=s.onerror=s.onreadystatechange=function(){if((s.readyState&&!(/^c|loade/.test(s.readyState)))||loaded){return}s.onload=s.onreadystatechange=null;loaded=1;ctx[name].ready(fn)};s.async=1;s.src=path;h.parentNode.insertBefore(s,h)}}})
-  ('PCTracking', 'https://cdn.jsdelivr.net/npm/pc-tracking@4/dist/pc-tracking.min.js', this);
+  (function(name,path,ctx){ctx[name]=ctx[name]||{ready:function(fn){var h=document.getElementsByTagName('head')[0],s=document.createElement('script'),w=window,loaded;s.onload=s.onreadystatechange=function(){if((s.readyState&&!(/^c|loade/.test(s.readyState)))||loaded){return}s.onload=s.onreadystatechange=null;loaded=1;ctx[name].ready(fn)};s.async=1;s.src=path;h.parentNode.insertBefore(s,h)}}})
+  ('KeenTracking', 'https://cdn.jsdelivr.net/npm/keen-tracking@4/dist/keen-tracking.min.js', this);
 
   PCTracking.ready(function(){
     const client = new PCTracking({
@@ -213,8 +221,7 @@ Every event that is recorded will inherit this baseline data model. Additional p
 
 ### Click and Form Submit Tracking
 
-Clicks and form submissions can be captured with `.listenTo()`. This function intercepts events for designated elements and creates a brief 500ms delay, allowing an HTTP request to execute before the page begins to unload.
-
+Clicks and form submissions can be captured with `.listenTo()`.
 This example further extends the `client` instance defined previously, and activates a simple timer when the page the loaded. Once a `click` or `submit` event is captured, the timer's value will be recorded as `visitor.time_on_page`.
 
 ```javascript
@@ -265,7 +272,7 @@ Click events (`clicks`) will record specific attributes from the clicked element
     "element": {
       "action" : undefined,                 // [DIRECT]
       "class": "cta",                       // [DIRECT]
-      "href": "https://pc.io/plans/",     // [INHERITED]
+      "href": "https://keen.io/",     // [INHERITED]
       "id": "main-cta",                     // [INHERITED]
       "event_key": "learn-more-cta",        // [INHERITED] from the `data-event-key` attribute
       "method": "learn-more-link",          // [DIRECT]
@@ -305,6 +312,46 @@ Would generate an event including a mixture of immediate attributes and attribut
 
 Want to get up and running faster? This can also be achieved in the browser with [automated event tracking](./docs/auto-tracking.md).
 
+---
+
+### Track views of the HTML elements
+
+Use [Intersection Observer](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) to track elements that have been seen by a user. In an example the CSS selector of the HTML elements is defined as `.track-element-view`. Use `threshold` to control the sensitivity of the Observer.
+Note: This feature works only on the [browsers that support Intersection Observer](https://caniuse.com/#search=IntersectionObserver).
+
+```javascript
+import KeenTracking from 'keen-tracking';
+
+const client = new KeenTracking({
+  projectId: 'PROJECT_ID',
+  writeKey: 'WRITE_KEY'
+});
+const helpers = KeenTracking.helpers;
+
+if(typeof IntersectionObserver !== 'undefined'){
+  const elementViewsOptions = {
+    threshold: 1.0,
+  }
+  const elementViewsCallback = (events, observer) => {
+    events.forEach(el => {
+      if(el.isIntersecting){
+        return client
+          .recordEvent({
+            event_collection: 'element_views',
+            event: {
+              element: helpers.getDomNodeProfile(el.target)
+           }
+          });
+      }
+    });
+  }
+  const observer = new IntersectionObserver(elementViewsCallback, elementViewsOptions);
+  const target = document.querySelectorAll('.track-element-view');
+  target.forEach(el => {
+    observer.observe(el);
+  });
+}
+```
 ---
 
 ### Block Bots and Improve Device Recognition
@@ -422,7 +469,7 @@ Save the event only once.
 ```javascript
 client
   .recordEvent({
-    collection: 'unique_clicks',
+    event_collection: 'unique_clicks',
     event: {
       some_key: 'some_value',
       // ...
@@ -465,13 +512,27 @@ const client = new PCTracking({
 // you can use different requestType for a single request
 client
   .recordEvent({
-    collection: 'clicks',
+    event_collection: 'clicks',
     event: {
       some_key: 'some_value',
       // ...
     },
     requestType: 'beaconAPI'
   });
+```
+
+---
+
+### Custom Host
+
+You can set a custom domain for requests
+
+```
+const client = new KeenTracking({
+  projectId: 'PROJECT_ID',
+  writeKey: 'WRITE_KEY',
+  host: 'somehost.com'
+});
 ```
 
 ---
@@ -483,6 +544,37 @@ Denormalization and duplication of data is a fact of life with Cassandra.
 Read more:
 - [Cassandra Modeling Guide](https://www.datastax.com/dev/blog/basic-rules-of-cassandra-data-modeling)
 - [How not to use Cassandra](https://opencredo.com/how-not-to-use-cassandra-like-an-rdbms-and-what-will-happen-if-you-do/)
+---
+
+### Tracking Opt-Out
+
+It's easy to build tracking opt-out functionality. If opt-out is set to true no data is recorded.
+
+You can set up opt-out by defining client instance
+
+```javascript
+const client = new KeenTracking({
+  projectId: 'PROJECT_ID',
+  writeKey: 'WRITE_KEY',
+  optOut: true
+});
+```
+
+or by invoking `client.setOptOut(true)` method
+
+```javascript
+client.setOptOut(true);
+```
+
+**Note:** The user can block tracking in the browser by [doNotTrack](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/doNotTrack) setting. We can respect or overwrite this setting by defining client instance
+```javascript
+const client = new KeenTracking({
+  projectId: 'PROJECT_ID',
+  writeKey: 'WRITE_KEY',
+  respectDoNotTrack: true // it's false by default
+});
+```
+
 ---
 
 ### Contributing
@@ -497,8 +589,9 @@ This is an open source project and we love involvement from the community! Hit u
 
 Need a hand with something? Shoot us an email at [team@pc.io](mailto:team@pc.io). We're always happy to help, or just hear what you're building! Here are a few other resources worth checking out:
 
-* [API status](http://status.pc.io/)
-* [API reference](https://pc.io/docs/api)
-* [How-to guides](https://pc.io/guides)
-* [Data modeling guide](https://pc.io/guides/data-modeling-guide/)
-* [Slack (public)](http://slack.pc.io/)
+* [Feature requests](https://keen.canny.io/)
+* [API status](http://status.keen.io/)
+* [API reference](https://keen.io/docs/api)
+* [How-to guides](https://keen.io/guides)
+* [Data modeling guide](https://keen.io/guides/data-modeling-guide/)
+* [Slack (public)](http://slack.keen.io/)

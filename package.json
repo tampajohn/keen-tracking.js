@@ -1,6 +1,6 @@
 {
   "name": "pc-tracking",
-  "version": "4.0.15",
+  "version": "4.5.0",
   "description": "Track events - custom user actions, clicks, pageviews, purchases.",
   "main": "dist/node/pc-tracking.js",
   "browser": "dist/pc-tracking.js",
@@ -18,8 +18,9 @@
     "build:node": "TARGET=node NODE_ENV=production webpack -p",
     "profile": "webpack --profile --json > stats.json",
     "analyze": "webpack-bundle-analyzer stats.json /dist",
-    "version": "npm run build && npm run test && git add .",
-    "postversion": "git push && git push --tags",
+    "preversion": "npm run build:node && npm run test",
+    "version": "npm run build && git add .",
+    "postversion": "git push && git push --tags && npm publish",
     "demo": "node ./test/demo/index.node.js"
   },
   "bugs": "https://github.com/pc/pc-tracking.js/issues",
@@ -54,11 +55,12 @@
     "Click analytics"
   ],
   "contributors": [
-    "Dustin Larimer <dustin@pc.io> (https://github.com/dustinlarimer)",
-    "Eric Anderson <eric@pc.io> (https://github.com/aroc)",
-    "Joe Wegner <joe@pc.io> (http://www.wegnerdesign.com)",
-    "Alex Kleissner <alex@pc.io> (https://github.com/hex337)",
-    "Adam Kasprowicz <adam.kasprowicz@pc.io> (https://github.com/adamkasprowicz)"
+    "Dustin Larimer <dustin@keen.io> (https://github.com/dustinlarimer)",
+    "Eric Anderson <eric@keen.io> (https://github.com/aroc)",
+    "Joe Wegner <joe@keen.io> (http://www.wegnerdesign.com)",
+    "Alex Kleissner <alex@keen.io> (https://github.com/hex337)",
+    "Adam Kasprowicz <adam.kasprowicz@keen.io> (https://github.com/adamkasprowicz)",
+    "Dariusz Łacheta <dariusz.lacheta@keen.io> (https://github.com/dariuszlacheta)"
   ],
   "license": "MIT",
   "dependencies": {
@@ -92,9 +94,9 @@
     "replace-in-file": "^3.4.0",
     "url-parse": "^1.4.3",
     "webpack": "^4.5.0",
-    "webpack-bundle-analyzer": "^2.11.1",
-    "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.1",
+    "webpack-bundle-analyzer": "^3.3.2",
+    "webpack-cli": "^2.0.13",
+    "webpack-dev-server": "^3.1.14",
     "xhr-mock": "^2.3.2"
   }
 }
