@@ -3613,6 +3613,7 @@ function initAutoTrackingCore(lib) {
         shareUuidAcrossDomains: true,
         collectIpAddress: true,
         collectUuid: true,
+        requestType: 'fetch',
         catchError: undefined // optional, function(someError) - error handler
       }, obj);
 
