@@ -91,7 +91,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 18);
+/******/ 	return __webpack_require__(__webpack_require__.s = 20);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -220,12 +220,11 @@ exports.default = configDefault;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(global) {/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(17);
+/* WEBPACK VAR INJECTION */(function(global) {/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(19);
 /* harmony import */ var _finally__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5);
 
 
 
-/** @suppress {undefinedVars} */
 var globalNS = (function() {
   // the only reliable means to get the global object is
   // `Function('return this')()`
@@ -242,8 +241,8 @@ var globalNS = (function() {
   throw new Error('unable to locate global object');
 })();
 
-if (!('Promise' in globalNS)) {
-  globalNS['Promise'] = _index__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"];
+if (!globalNS.Promise) {
+  globalNS.Promise = _index__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"];
 } else if (!globalNS.Promise.prototype['finally']) {
   globalNS.Promise.prototype['finally'] = _finally__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"];
 }
@@ -255,10 +254,7 @@ if (!('Promise' in globalNS)) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/**
- * @this {Promise}
- */
-function finallyConstructor(callback) {
+/* harmony default export */ __webpack_exports__["a"] = (function(callback) {
   var constructor = this.constructor;
   return this.then(
     function(value) {
@@ -272,9 +268,7 @@ function finallyConstructor(callback) {
       });
     }
   );
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (finallyConstructor);
+});
 
 
 /***/ }),
@@ -288,7 +282,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _core = __webpack_require__(20);
+var _core = __webpack_require__(22);
 
 var _core2 = _interopRequireDefault(_core);
 
@@ -300,15 +294,18 @@ var _extend = __webpack_require__(1);
 
 var _extend2 = _interopRequireDefault(_extend);
 
-var _queue = __webpack_require__(9);
+var _queue = __webpack_require__(10);
 
-var _package = __webpack_require__(10);
+var _optOut = __webpack_require__(11);
+
+var _package = __webpack_require__(8);
 
 var _package2 = _interopRequireDefault(_package);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _core2.default.helpers = _core2.default.helpers || {};
+_core2.default.prototype.observers = _core2.default.observers || {};
 
 // Install internal queue
 _core2.default.on('client', function (client) {
@@ -316,6 +313,16 @@ _core2.default.on('client', function (client) {
     events: [],
     collections: {}
   };
+
+  if (!client.config.respectDoNotTrack) {
+    this.doNotTrack = false;
+  }
+
+  if (typeof client.config.optOut !== 'undefined') {
+    (0, _optOut.setOptOut)(client.config.optOut);
+    this.optedOut = client.config.optOut;
+  }
+
   client.queue = (0, _queue.queue)(client.config.queue);
   client.queue.on('flush', function () {
     client.recordDeferredEvents();
@@ -516,6 +523,12 @@ Emitter.prototype.hasListeners = function(event){
 
 /***/ }),
 /* 8 */
+/***/ (function(module) {
+
+module.exports = JSON.parse("{\"name\":\"pc-tracking\",\"version\":\"4.5.0\",\"description\":\"Track events - custom user actions, clicks, pageviews, purchases.\",\"main\":\"dist/node/pc-tracking.js\",\"browser\":\"dist/pc-tracking.js\",\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/pc/pc-tracking.js.git\"},\"scripts\":{\"start\":\"NODE_ENV=development webpack-dev-server\",\"test\":\"NODE_ENV=test jest && npm run test:node\",\"test:node\":\"NODE_ENV=test TEST_ENV=node jest\",\"test:watch\":\"NODE_ENV=test jest --watch\",\"test:node:watch\":\"NODE_ENV=test TEST_ENV=node jest --watch\",\"build\":\"NODE_ENV=production webpack -p && NODE_ENV=production OPTIMIZE_MINIMIZE=1 webpack -p && npm run build:node\",\"build:node\":\"TARGET=node NODE_ENV=production webpack -p\",\"profile\":\"webpack --profile --json > stats.json\",\"analyze\":\"webpack-bundle-analyzer stats.json /dist\",\"preversion\":\"npm run build:node && npm run test\",\"version\":\"npm run build && git add .\",\"postversion\":\"git push && git push --tags && npm publish\",\"demo\":\"node ./test/demo/index.node.js\"},\"bugs\":\"https://github.com/pc/pc-tracking.js/issues\",\"author\":\"PC IO <team@pc.io> (https://pc.io/)\",\"homepage\":\"https://pc.io\",\"keywords\":[\"Tracking\",\"Tracker\",\"Event Tracker\",\"Event tracking\",\"Track events\",\"Page tracking\",\"User tracking\",\"Analytics event tracking\",\"Analytics events\",\"Analytics tracking\",\"Custom events\",\"Analytics\",\"Stats\",\"Statistics\",\"Monitoring\",\"Metrics\",\"Pageviews\",\"Segmentation\",\"Funnel\",\"Conversion\",\"Log\",\"Logger\",\"Logging\",\"Javascript events\",\"Universal tracking\",\"Click analytics\"],\"contributors\":[\"Dustin Larimer <dustin@keen.io> (https://github.com/dustinlarimer)\",\"Eric Anderson <eric@keen.io> (https://github.com/aroc)\",\"Joe Wegner <joe@keen.io> (http://www.wegnerdesign.com)\",\"Alex Kleissner <alex@keen.io> (https://github.com/hex337)\",\"Adam Kasprowicz <adam.kasprowicz@keen.io> (https://github.com/adamkasprowicz)\",\"Dariusz Łacheta <dariusz.lacheta@keen.io> (https://github.com/dariuszlacheta)\"],\"license\":\"MIT\",\"dependencies\":{\"component-emitter\":\"^1.2.0\",\"js-cookie\":\"2.1.0\",\"promise-polyfill\":\"^8.0.0\",\"whatwg-fetch\":\"^2.0.4\"},\"devDependencies\":{\"babel-core\":\"^6.26.3\",\"babel-jest\":\"^23.0.1\",\"babel-loader\":\"^7.1.5\",\"babel-plugin-transform-es2015-modules-commonjs\":\"^6.26.2\",\"babel-plugin-transform-object-rest-spread\":\"^6.26.0\",\"babel-polyfill\":\"^6.26.0\",\"babel-preset-env\":\"^1.7.0\",\"babel-preset-es2015\":\"^6.24.1\",\"babel-preset-stage-0\":\"^6.24.1\",\"eslint\":\"^4.19.1\",\"eslint-config-airbnb\":\"^16.1.0\",\"eslint-loader\":\"^2.0.0\",\"eslint-plugin-import\":\"^2.11.0\",\"eslint-plugin-jsx-a11y\":\"^6.0.3\",\"html-loader\":\"^0.5.5\",\"html-webpack-plugin\":\"^3.2.0\",\"jest\":\"^22.4.3\",\"jest-fetch-mock\":\"^1.6.5\",\"merge\":\"^1.2.1\",\"nock\":\"^9.2.6\",\"regenerator-runtime\":\"^0.11.1\",\"replace-in-file\":\"^3.4.0\",\"url-parse\":\"^1.4.3\",\"webpack\":\"^4.5.0\",\"webpack-bundle-analyzer\":\"^3.3.2\",\"webpack-cli\":\"^3.1.1\",\"webpack-dev-server\":\"^3.11.0\",\"xhr-mock\":\"^2.3.2\"},\"optionalDependencies\":{\"fsevents\":\"^1.2.9\"}}");
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports) {
 
 (function(self) {
@@ -987,7 +1000,7 @@ Emitter.prototype.hasListeners = function(event){
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1074,13 +1087,57 @@ function shouldFlushQueue(props) {
 }
 
 /***/ }),
-/* 10 */
-/***/ (function(module) {
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = {"name":"pc-tracking","version":"4.0.15","description":"Track events - custom user actions, clicks, pageviews, purchases.","main":"dist/node/pc-tracking.js","browser":"dist/pc-tracking.js","repository":{"type":"git","url":"https://github.com/pc/pc-tracking.js.git"},"scripts":{"start":"NODE_ENV=development webpack-dev-server","test":"NODE_ENV=test jest && npm run test:node","test:node":"NODE_ENV=test TEST_ENV=node jest","test:watch":"NODE_ENV=test jest --watch","test:node:watch":"NODE_ENV=test TEST_ENV=node jest --watch","build":"NODE_ENV=production webpack -p && NODE_ENV=production OPTIMIZE_MINIMIZE=1 webpack -p && npm run build:node","build:node":"TARGET=node NODE_ENV=production webpack -p","profile":"webpack --profile --json > stats.json","analyze":"webpack-bundle-analyzer stats.json /dist","version":"npm run build && npm run test && git add .","postversion":"git push && git push --tags","demo":"node ./test/demo/index.node.js"},"bugs":"https://github.com/pc/pc-tracking.js/issues","author":"PC IO <team@pc.io> (https://pc.io/)","homepage":"https://pc.io","keywords":["Tracking","Tracker","Event Tracker","Event tracking","Track events","Page tracking","User tracking","Analytics event tracking","Analytics events","Analytics tracking","Custom events","Analytics","Stats","Statistics","Monitoring","Metrics","Pageviews","Segmentation","Funnel","Conversion","Log","Logger","Logging","Javascript events","Universal tracking","Click analytics"],"contributors":["Dustin Larimer <dustin@pc.io> (https://github.com/dustinlarimer)","Eric Anderson <eric@pc.io> (https://github.com/aroc)","Joe Wegner <joe@pc.io> (http://www.wegnerdesign.com)","Alex Kleissner <alex@pc.io> (https://github.com/hex337)","Adam Kasprowicz <adam.kasprowicz@pc.io> (https://github.com/adamkasprowicz)"],"license":"MIT","dependencies":{"component-emitter":"^1.2.0","js-cookie":"2.1.0","promise-polyfill":"^8.0.0","whatwg-fetch":"^2.0.4"},"devDependencies":{"babel-core":"^6.26.3","babel-jest":"^23.0.1","babel-loader":"^7.1.5","babel-plugin-transform-es2015-modules-commonjs":"^6.26.2","babel-plugin-transform-object-rest-spread":"^6.26.0","babel-polyfill":"^6.26.0","babel-preset-env":"^1.7.0","babel-preset-es2015":"^6.24.1","babel-preset-stage-0":"^6.24.1","eslint":"^4.19.1","eslint-config-airbnb":"^16.1.0","eslint-loader":"^2.0.0","eslint-plugin-import":"^2.11.0","eslint-plugin-jsx-a11y":"^6.0.3","html-loader":"^0.5.5","html-webpack-plugin":"^3.2.0","jest":"^22.4.3","jest-fetch-mock":"^1.6.5","merge":"^1.2.1","nock":"^9.2.6","regenerator-runtime":"^0.11.1","replace-in-file":"^3.4.0","url-parse":"^1.4.3","webpack":"^4.5.0","webpack-bundle-analyzer":"^2.11.1","webpack-cli":"^3.1.2","webpack-dev-server":"^3.1.1","xhr-mock":"^2.3.2"}};
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.setOptOut = setOptOut;
+
+var _localStorage = __webpack_require__(12);
+
+function setOptOut() {
+    var optOut = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+    if (!_localStorage.isLocalStorageAvailable) return;
+
+    if (optOut) {
+        localStorage.setItem('optout', optOut);
+        return;
+    }
+
+    localStorage.removeItem('optout');
+};
 
 /***/ }),
-/* 11 */
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+function lsTest() {
+    var test = 'test';
+    try {
+        localStorage.setItem(test, test);
+        localStorage.removeItem(test);
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+var isLocalStorageAvailable = exports.isLocalStorageAvailable = lsTest();
+
+/***/ }),
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1096,7 +1153,7 @@ exports.extendEvent = extendEvent;
 exports.extendEvents = extendEvents;
 exports.getExtendedEventBody = getExtendedEventBody;
 
-var _deepExtend = __webpack_require__(12);
+var _deepExtend = __webpack_require__(14);
 
 var _each = __webpack_require__(0);
 
@@ -1140,7 +1197,7 @@ function getExtendedEventBody(result, queue) {
 }
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1185,7 +1242,7 @@ function clone(input) {
 }
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1236,7 +1293,7 @@ var MD5 = exports.MD5 = function MD5(d) {
 exports.default = MD5;
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1267,7 +1324,7 @@ function getScreenProfile() {
 }
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1282,8 +1339,8 @@ function getWindowProfile() {
 
   if ('undefined' == typeof document) return {};
 
-  body = document.body;
-  html = document.documentElement;
+  body = document.body || {};
+  html = document.documentElement || {};
 
   output = {
     'height': 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight,
@@ -1307,7 +1364,7 @@ function getWindowProfile() {
 */
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1350,7 +1407,7 @@ function getDomNodePath(el) {
 // via: http://stackoverflow.com/a/16742828/2511985
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1370,21 +1427,13 @@ function bind(fn, thisArg) {
   };
 }
 
-/**
- * @constructor
- * @param {Function} fn
- */
 function Promise(fn) {
   if (!(this instanceof Promise))
     throw new TypeError('Promises must be constructed via new');
   if (typeof fn !== 'function') throw new TypeError('not a function');
-  /** @type {!number} */
   this._state = 0;
-  /** @type {!boolean} */
   this._handled = false;
-  /** @type {Promise|undefined} */
   this._value = undefined;
-  /** @type {!Array<!Function>} */
   this._deferreds = [];
 
   doResolve(fn, this);
@@ -1465,9 +1514,6 @@ function finale(self) {
   self._deferreds = null;
 }
 
-/**
- * @constructor
- */
 function Handler(onFulfilled, onRejected, promise) {
   this.onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : null;
   this.onRejected = typeof onRejected === 'function' ? onRejected : null;
@@ -1507,7 +1553,6 @@ Promise.prototype['catch'] = function(onRejected) {
 };
 
 Promise.prototype.then = function(onFulfilled, onRejected) {
-  // @ts-ignore
   var prom = new this.constructor(noop);
 
   handle(this, new Handler(onFulfilled, onRejected, prom));
@@ -1596,17 +1641,17 @@ Promise._unhandledRejectionFn = function _unhandledRejectionFn(err) {
 
 /* harmony default export */ __webpack_exports__["a"] = (Promise);
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(25).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(27).setImmediate))
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(19);
+module.exports = __webpack_require__(21);
 
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1629,41 +1674,45 @@ var _extend = __webpack_require__(1);
 
 var _extend2 = _interopRequireDefault(_extend);
 
-var _listener = __webpack_require__(23);
+var _listener = __webpack_require__(25);
 
-var _recordEventsBrowser = __webpack_require__(24);
+var _recordEventsBrowser = __webpack_require__(26);
 
-var _deferEvents = __webpack_require__(32);
+var _deferEvents = __webpack_require__(34);
 
-var _extendEvents = __webpack_require__(11);
+var _extendEvents = __webpack_require__(13);
 
-var _browserAutoTracking = __webpack_require__(33);
+var _browserAutoTracking = __webpack_require__(35);
 
-var _getBrowserProfile = __webpack_require__(34);
+var _getBrowserProfile = __webpack_require__(36);
 
-var _getDatetimeIndex = __webpack_require__(35);
+var _getDatetimeIndex = __webpack_require__(37);
 
-var _getDomainName = __webpack_require__(36);
+var _getDomainName = __webpack_require__(38);
 
-var _getDomNodePath = __webpack_require__(16);
+var _getDomNodePath = __webpack_require__(18);
 
-var _getDomNodeProfile = __webpack_require__(37);
+var _getDomNodeProfile = __webpack_require__(39);
 
-var _getScreenProfile = __webpack_require__(14);
+var _getScreenProfile = __webpack_require__(16);
 
-var _getScrollState = __webpack_require__(38);
+var _getScrollState = __webpack_require__(40);
 
-var _getUniqueId = __webpack_require__(39);
+var _getUniqueId = __webpack_require__(41);
 
-var _getWindowProfile = __webpack_require__(15);
+var _getWindowProfile = __webpack_require__(17);
 
-var _cookie = __webpack_require__(40);
+var _cookie = __webpack_require__(42);
 
-var _deepExtend = __webpack_require__(12);
+var _deepExtend = __webpack_require__(14);
 
-var _serializeForm = __webpack_require__(42);
+var _serializeForm = __webpack_require__(44);
 
-var _timer = __webpack_require__(43);
+var _timer = __webpack_require__(45);
+
+var _optOut = __webpack_require__(11);
+
+var _localStorage = __webpack_require__(12);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1680,7 +1729,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
   deferEvents: _deferEvents.deferEvents,
   queueCapacity: _deferEvents.queueCapacity,
   queueInterval: _deferEvents.queueInterval,
-  recordDeferredEvents: _deferEvents.recordDeferredEvents
+  recordDeferredEvents: _deferEvents.recordDeferredEvents,
+  setOptOut: _optOut.setOptOut
 });
 (0, _extend2.default)(_index2.default.prototype, {
   extendEvent: _extendEvents.extendEvent,
@@ -1737,20 +1787,28 @@ if (typeof webpackPCGlobals !== 'undefined') {
   exports.pcGlobals = pcGlobals = webpackPCGlobals;
 }
 
+if (_localStorage.isLocalStorageAvailable && localStorage.getItem('optout')) {
+  _index2.default.optedOut = true;
+}
+
+if (navigator.doNotTrack === '1' || navigator.doNotTrack === 'yes') {
+  _index2.default.doNotTrack = true;
+}
+
 var PC = exports.PC = _index2.default.extendLibrary(_index2.default); // deprecated, left for backward compatibility
 var PCTracking = exports.PCTracking = PC;
 exports.default = PC;
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {(function(env){
   var previousPC = env.PC || undefined;
   var each = __webpack_require__(0),
       extend = __webpack_require__(1),
-      parseParams = __webpack_require__(21),
-      serialize = __webpack_require__(22);
+      parseParams = __webpack_require__(23),
+      serialize = __webpack_require__(24);
 
   var Emitter = __webpack_require__(7);
 
@@ -1970,7 +2028,7 @@ exports.default = PC;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(2)))
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports) {
 
 module.exports = parseParams;
@@ -1992,7 +2050,7 @@ function parseParams(str){
 
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var each = __webpack_require__(0),
@@ -2013,7 +2071,7 @@ function serialize(data){
 
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2303,7 +2361,7 @@ function deferFormSubmit(evt, form, callback) {
 }
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2322,9 +2380,9 @@ exports.recordEvents = recordEvents;
 
 __webpack_require__(4);
 
-__webpack_require__(8);
+__webpack_require__(9);
 
-var _base = __webpack_require__(28);
+var _base = __webpack_require__(30);
 
 var _base2 = _interopRequireDefault(_base);
 
@@ -2340,13 +2398,15 @@ var _index = __webpack_require__(6);
 
 var _index2 = _interopRequireDefault(_index);
 
-var _extendEvents = __webpack_require__(11);
+var _package = __webpack_require__(8);
 
-var _fetchRetry = __webpack_require__(29);
+var _extendEvents = __webpack_require__(13);
+
+var _fetchRetry = __webpack_require__(31);
 
 var _fetchRetry2 = _interopRequireDefault(_fetchRetry);
 
-var _unique = __webpack_require__(30);
+var _unique = __webpack_require__(32);
 
 var _unique2 = _interopRequireDefault(_unique);
 
@@ -2415,6 +2475,20 @@ function recordEvent(eventCollectionOrConfigObject, eventBody, callback) {
     return false;
   }
 
+  if (_index2.default.optedOut) {
+    return Promise.resolve({
+      created: false,
+      message: 'PC.optedOut is set to true.'
+    });
+  }
+
+  if (_index2.default.doNotTrack) {
+    return Promise.resolve({
+      created: false,
+      message: 'PC.doNotTrack is set to true.'
+    });
+  }
+
   return send.call(this, { url: url, extendedEventsHash: extendedEventsHash, callback: callback, configObject: configObject, eventCollection: eventCollection });
 }
 
@@ -2467,6 +2541,20 @@ function recordEvents(eventsHash, callback) {
   if (!_index2.default.enabled) {
     handleValidationError.call(this, 'PC.enabled is set to false.', callback);
     return false;
+  }
+
+  if (_index2.default.optedOut) {
+    return Promise.resolve({
+      created: false,
+      message: 'PC.optedOut is set to true.'
+    });
+  }
+
+  if (_index2.default.doNotTrack) {
+    return Promise.resolve({
+      created: false,
+      message: 'PC.doNotTrack is set to true.'
+    });
   }
 
   return send.call(this, { url: url, extendedEventsHash: extendedEventsHash, callback: callback });
@@ -2537,7 +2625,8 @@ function sendFetch(method, url, data) {
     referrerPolicy: self.referrerPolicy() || 'unsafe-url',
     headers: {
       'Authorization': self.writeKey(),
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'keen-sdk': 'javascript-' + _package.version
     },
     // keepalive: true, not supported for CORS yet
     retry: self.config.retry
@@ -2670,7 +2759,7 @@ function sendBeacon(url, callback) {
 }
 
 /***/ }),
-/* 25 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -2726,7 +2815,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(26);
+__webpack_require__(28);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -2740,7 +2829,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(2)))
 
 /***/ }),
-/* 26 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -2930,10 +3019,10 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(2), __webpack_require__(27)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(2), __webpack_require__(29)))
 
 /***/ }),
-/* 27 */
+/* 29 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -3123,7 +3212,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 28 */
+/* 30 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -3175,7 +3264,7 @@ module.exports = {
 
 
 /***/ }),
-/* 29 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3236,7 +3325,7 @@ exports.default = function (url, options) {
 
 __webpack_require__(4);
 
-__webpack_require__(8);
+__webpack_require__(9);
 
 var _configDefault = __webpack_require__(3);
 
@@ -3247,7 +3336,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 ;
 
 /***/ }),
-/* 30 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3262,11 +3351,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 __webpack_require__(4);
 
-var _md = __webpack_require__(13);
+var _md = __webpack_require__(15);
 
 var _md2 = _interopRequireDefault(_md);
 
-var _cacheBrowser = __webpack_require__(31);
+var _cacheBrowser = __webpack_require__(33);
 
 var _configDefault = __webpack_require__(3);
 
@@ -3323,7 +3412,7 @@ var isUnique = exports.isUnique = function isUnique(customCacheConfig, extendedE
 exports.default = isUnique;
 
 /***/ }),
-/* 31 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3338,9 +3427,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 __webpack_require__(4);
 
-__webpack_require__(8);
+__webpack_require__(9);
 
-var _md = __webpack_require__(13);
+var _md = __webpack_require__(15);
 
 var _md2 = _interopRequireDefault(_md);
 
@@ -3351,10 +3440,11 @@ var _configDefault2 = _interopRequireDefault(_configDefault);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 if (typeof self === 'undefined') {
-  throw 'IndexedDB is available only in Browser ENV';
+  console.log('IndexedDB is available only in Browser ENV');
 }
 
-var indexedDBAvailable = 'indexedDB' in self;
+var indexedDBAvailable = typeof self !== 'undefined' && 'indexedDB' in self;
+
 var cachingEnabled = true;
 
 if (!indexedDBAvailable) {
@@ -3465,7 +3555,7 @@ var getFromCache = exports.getFromCache = function getFromCache(hash) {
 };
 
 /***/ }),
-/* 32 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3493,7 +3583,7 @@ var _each = __webpack_require__(0);
 
 var _each2 = _interopRequireDefault(_each);
 
-var _queue = __webpack_require__(9);
+var _queue = __webpack_require__(10);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3575,7 +3665,7 @@ function handleValidationError(message) {
 }
 
 /***/ }),
-/* 33 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3584,9 +3674,12 @@ function handleValidationError(message) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 exports.initAutoTrackingCore = initAutoTrackingCore;
 
-var _package = __webpack_require__(10);
+var _package = __webpack_require__(8);
 
 var _package2 = _interopRequireDefault(_package);
 
@@ -3605,6 +3698,7 @@ function initAutoTrackingCore(lib) {
         ignoreDisabledFormFields: false,
         ignoreFormFieldTypes: ['password'],
         recordClicks: true,
+        recordClicksPositionPointer: false,
         recordChanges: true,
         recordFormSubmits: false,
         recordPageViews: true,
@@ -3613,6 +3707,7 @@ function initAutoTrackingCore(lib) {
         shareUuidAcrossDomains: true,
         collectIpAddress: true,
         collectUuid: true,
+        recordElementViews: true,
         requestType: 'fetch',
         catchError: undefined // optional, function(someError) - error handler
       }, obj);
@@ -3633,6 +3728,35 @@ function initAutoTrackingCore(lib) {
 
       var now = new Date();
       var cookie = new utils.cookie('pc');
+
+      var allTimeOnSiteS = 0;
+      var allTimeOnSiteMS = 0;
+      if (typeof document !== 'undefined') {
+        var hidden = void 0;
+        var visibilityChange = void 0;
+        if (typeof document.hidden !== "undefined") {
+          hidden = "hidden";
+          visibilityChange = "visibilitychange";
+        } else if (typeof document.msHidden !== "undefined") {
+          hidden = "msHidden";
+          visibilityChange = "msvisibilitychange";
+        } else if (typeof document.webkitHidden !== "undefined") {
+          hidden = "webkitHidden";
+          visibilityChange = "webkitvisibilitychange";
+        }
+
+        var handleVisibilityChange = function handleVisibilityChange() {
+          if (document[hidden]) {
+            allTimeOnSiteS += getSecondsSinceDate(now);
+            allTimeOnSiteMS += getMiliSecondsSinceDate(now);
+            return;
+          }
+          now = new Date();
+        };
+        if (typeof document.addEventListener !== "undefined" || hidden !== undefined) {
+          document.addEventListener(visibilityChange, handleVisibilityChange, false);
+        }
+      }
 
       var domainName = helpers.getDomainName(window.location.hostname);
       var cookieDomain = domainName && options.shareUuidAcrossDomains ? {
@@ -3675,8 +3799,8 @@ function initAutoTrackingCore(lib) {
             title: document ? document.title : null,
             description: browserProfile.description,
             scroll_state: scrollState,
-            time_on_page: getSecondsSinceDate(now),
-            time_on_page_ms: getMiliSecondsSinceDate(now)
+            time_on_page: allTimeOnSiteS > 0 ? allTimeOnSiteS : getSecondsSinceDate(now),
+            time_on_page_ms: allTimeOnSiteMS > 0 ? allTimeOnSiteMS : getMiliSecondsSinceDate(now)
           },
           user_agent: window.navigator.userAgent,
           tech: {
@@ -3699,12 +3823,21 @@ function initAutoTrackingCore(lib) {
       });
 
       if (options.recordClicks === true) {
-        utils.listener('*').on('click', function (e) {
+        utils.listener('a, a *, button').on('click', function (e) {
           var el = e.target;
           var event = {
             element: helpers.getDomNodeProfile(el),
             local_time_full: new Date().toISOString()
           };
+
+          // pointer position tracking
+          if (options.recordClicksPositionPointer === true) {
+            var pointer = {
+              x_position: e.pageX,
+              y_position: e.pageY
+            };
+            event = _extends({}, event, { pointer: pointer });
+          }
 
           if (options.catchError) {
             return client.recordEvent({
@@ -3738,7 +3871,6 @@ function initAutoTrackingCore(lib) {
               options.catchError(err);
             });
           }
-
           return client.recordEvent({
             collection: 'changes',
             event: event
@@ -3802,7 +3934,45 @@ function initAutoTrackingCore(lib) {
           });
         });
       }
+
+      if (options.recordElementViews === true) {
+        if (typeof IntersectionObserver !== 'undefined') {
+          var elementViewsOptions = {
+            threshold: 1.0
+          };
+          var elementViewsCallback = function elementViewsCallback(events, observer) {
+            events.forEach(function (el) {
+              if (el.isIntersecting) {
+                var event = {
+                  element: helpers.getDomNodeProfile(el.target),
+                  local_time_full: new Date().toISOString()
+                };
+                if (options.catchError) {
+                  return client.recordEvent({
+                    collection: 'element_views',
+                    event: event
+                  }).catch(function (err) {
+                    options.catchError(err);
+                  });
+                }
+
+                return client.recordEvent({
+                  collection: 'element_views',
+                  event: event
+                });
+              }
+            });
+          };
+          var observer = new IntersectionObserver(elementViewsCallback, elementViewsOptions);
+          var target = document.querySelectorAll('.track-element-view');
+          target.forEach(function (el) {
+            observer.observe(el);
+          });
+          client.observers.IntersectionObserver = observer;
+        }
+      }
     }
+
     return client;
   };
 }
@@ -3821,7 +3991,7 @@ function getDomain(hostname) {
 }
 
 /***/ }),
-/* 34 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3832,9 +4002,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.getBrowserProfile = getBrowserProfile;
 
-var _getScreenProfile = __webpack_require__(14);
+var _getScreenProfile = __webpack_require__(16);
 
-var _getWindowProfile = __webpack_require__(15);
+var _getWindowProfile = __webpack_require__(17);
 
 function getBrowserProfile() {
   return {
@@ -3847,6 +4017,7 @@ function getBrowserProfile() {
     'platform': navigator.platform,
     'useragent': navigator.userAgent,
     'version': navigator.appVersion,
+    'doNotTrack': navigator.doNotTrack,
     'screen': (0, _getScreenProfile.getScreenProfile)(),
     'window': (0, _getWindowProfile.getWindowProfile)()
   };
@@ -3861,7 +4032,7 @@ function getDocumentDescription() {
 }
 
 /***/ }),
-/* 35 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3883,7 +4054,7 @@ function getDatetimeIndex(input) {
 }
 
 /***/ }),
-/* 36 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3931,7 +4102,7 @@ function getDomainName(url) {
 }
 
 /***/ }),
-/* 37 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3942,7 +4113,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.getDomNodeProfile = getDomNodeProfile;
 
-var _getDomNodePath = __webpack_require__(16);
+var _getDomNodePath = __webpack_require__(18);
 
 function getDomNodeProfile(el) {
   return {
@@ -3978,7 +4149,7 @@ var getElementProps = function getElementProps(el, prop) {
 };
 
 /***/ }),
-/* 38 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4034,7 +4205,7 @@ function getWindowHeight() {
 }
 
 /***/ }),
-/* 39 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4063,7 +4234,7 @@ function getUniqueId() {
 }
 
 /***/ }),
-/* 40 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4076,7 +4247,7 @@ exports.cookie = undefined;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _jsCookie = __webpack_require__(41);
+var _jsCookie = __webpack_require__(43);
 
 var _jsCookie2 = _interopRequireDefault(_jsCookie);
 
@@ -4147,7 +4318,7 @@ cookie.prototype.enabled = function () {
 };
 
 /***/ }),
-/* 41 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -4293,7 +4464,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 
 /***/ }),
-/* 42 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4559,7 +4730,7 @@ function str_serialize(result, key, value) {
 }
 
 /***/ }),
-/* 43 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
