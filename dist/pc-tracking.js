@@ -1902,7 +1902,7 @@ exports.default = PC;
     this.config = this.config || {
       host         : 'clickstream.events',
       protocol     : 'https',
-      requestType  : 'jsonp',
+      requestType  : 'fetch',
       resources    : extend({}, Client.resources)
     };
 
@@ -2570,7 +2570,7 @@ function send(_ref) {
 
   var clientConfig = this.config;
   var requestType = configObject.requestType // specific method for one request
-  || this.config.requestType; // global request type of client
+  || clientConfig.requestType; // global request type of client
 
   if (navigator && navigator.sendBeacon && requestType === 'beaconAPI'
   // so you can send specific recordEvent() using beaconAPI

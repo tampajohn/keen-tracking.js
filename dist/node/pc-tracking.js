@@ -933,7 +933,7 @@ module.exports = PC;
     this.config = this.config || {
       host         : 'clickstream.events',
       protocol     : 'https',
-      requestType  : 'jsonp',
+      requestType  : 'fetch',
       resources    : extend({}, Client.resources)
     };
 
