@@ -1,6 +1,6 @@
 {
   "name": "pc-tracking",
-  "version": "4.5.0",
+  "version": "4.6.0",
   "description": "Track events - custom user actions, clicks, pageviews, purchases.",
   "main": "dist/node/pc-tracking.js",
   "browser": "dist/pc-tracking.js",
