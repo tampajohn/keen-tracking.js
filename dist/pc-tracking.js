@@ -1698,17 +1698,19 @@ var _getScreenProfile = __webpack_require__(16);
 
 var _getScrollState = __webpack_require__(40);
 
-var _getUniqueId = __webpack_require__(41);
+var _getURLParams = __webpack_require__(41);
+
+var _getUniqueId = __webpack_require__(42);
 
 var _getWindowProfile = __webpack_require__(17);
 
-var _cookie = __webpack_require__(42);
+var _cookie = __webpack_require__(43);
 
 var _deepExtend = __webpack_require__(14);
 
-var _serializeForm = __webpack_require__(44);
+var _serializeForm = __webpack_require__(45);
 
-var _timer = __webpack_require__(45);
+var _timer = __webpack_require__(46);
 
 var _optOut = __webpack_require__(11);
 
@@ -1757,6 +1759,7 @@ var initAutoTracking = (0, _browserAutoTracking.initAutoTrackingCore)(_index2.de
   getScreenProfile: _getScreenProfile.getScreenProfile,
   getScrollState: _getScrollState.getScrollState,
   getUniqueId: _getUniqueId.getUniqueId,
+  getURLParams: _getURLParams.getURLParams,
   getWindowProfile: _getWindowProfile.getWindowProfile
 });
 
@@ -3778,6 +3781,37 @@ function initAutoTrackingCore(lib) {
         cookie.set('initialReferrer', initialReferrer, cookieDomain);
       }
 
+      var initialLandingPage = cookie.get('initialLandingPage');
+      if (!initialLandingPage) {
+        initialLandingPage = window.location.href;
+        cookie.set('initialLandingPage', initialLandingPage, cookieDomain);
+      }
+
+      var latestUTM = cookie.get('latestUTM');
+      if (window.location.search.toLowerCase().indexOf('utm_campaign') > -1) {
+        var query = window.location.search.slice(1).toLowerCase();
+        var params = helpers.getURLParams(query);
+        var _params$utm_source = params.utm_source,
+            utm_source = _params$utm_source === undefined ? null : _params$utm_source,
+            _params$utm_medium = params.utm_medium,
+            utm_medium = _params$utm_medium === undefined ? null : _params$utm_medium,
+            _params$utm_campaign = params.utm_campaign,
+            utm_campaign = _params$utm_campaign === undefined ? null : _params$utm_campaign,
+            _params$utm_term = params.utm_term,
+            utm_term = _params$utm_term === undefined ? null : _params$utm_term,
+            _params$utm_content = params.utm_content,
+            utm_content = _params$utm_content === undefined ? null : _params$utm_content;
+
+        latestUTM = {
+          utm_source: utm_source,
+          utm_campaign: utm_campaign,
+          utm_medium: utm_medium,
+          utm_term: utm_term,
+          utm_content: utm_content
+        };
+        cookie.set('latestUTM', latestUTM, cookieDomain);
+      }
+
       var scrollState = {};
       if (options.recordScrollState) {
         scrollState = helpers.getScrollState();
@@ -3814,7 +3848,10 @@ function initAutoTrackingCore(lib) {
             path: window ? window.location.pathname : '',
             qs: window ? window.location.search : ''
           },
-
+          funnel: {
+            latest_utm: latestUTM,
+            initial_landing_page: initialLandingPage
+          },
           referrer: {
             initial: initialReferrer,
             full: document ? document.referrer : ''
@@ -4212,6 +4249,43 @@ function getWindowHeight() {
 
 
 Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var getURLParams = exports.getURLParams = function getURLParams(search) {
+    var hashes = search.slice(search.indexOf('?') + 1).split('&');
+    var params = {};
+    hashes.map(function (hash) {
+        var _hash$split = hash.split('='),
+            _hash$split2 = _slicedToArray(_hash$split, 2),
+            key = _hash$split2[0],
+            val = _hash$split2[1];
+
+        key = decodeURIComponent(key);
+        if (key.indexOf('[') > -1) {
+            // handle multiple type inputs
+            if (typeof params[key] === 'undefined') {
+                params[key] = [];
+            }
+
+            params[key].push(decodeURIComponent(val));
+        } else {
+            params[key] = decodeURIComponent(val);
+        }
+    });
+    return params;
+};
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.getUniqueId = getUniqueId;
@@ -4234,7 +4308,7 @@ function getUniqueId() {
 }
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4247,7 +4321,7 @@ exports.cookie = undefined;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _jsCookie = __webpack_require__(43);
+var _jsCookie = __webpack_require__(44);
 
 var _jsCookie2 = _interopRequireDefault(_jsCookie);
 
@@ -4318,7 +4392,7 @@ cookie.prototype.enabled = function () {
 };
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -4464,7 +4538,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4730,7 +4804,7 @@ function str_serialize(result, key, value) {
 }
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
