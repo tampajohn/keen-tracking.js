@@ -525,7 +525,7 @@ Emitter.prototype.hasListeners = function(event){
 /* 8 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"name\":\"pc-tracking\",\"version\":\"4.6.0\",\"description\":\"Track events - custom user actions, clicks, pageviews, purchases.\",\"main\":\"dist/node/pc-tracking.js\",\"browser\":\"dist/pc-tracking.js\",\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/pc/pc-tracking.js.git\"},\"scripts\":{\"start\":\"NODE_ENV=development webpack-dev-server\",\"test\":\"NODE_ENV=test jest && npm run test:node\",\"test:node\":\"NODE_ENV=test TEST_ENV=node jest\",\"test:watch\":\"NODE_ENV=test jest --watch\",\"test:node:watch\":\"NODE_ENV=test TEST_ENV=node jest --watch\",\"build\":\"NODE_ENV=production webpack -p && NODE_ENV=production OPTIMIZE_MINIMIZE=1 webpack -p && npm run build:node\",\"build:node\":\"TARGET=node NODE_ENV=production webpack -p\",\"profile\":\"webpack --profile --json > stats.json\",\"analyze\":\"webpack-bundle-analyzer stats.json /dist\",\"preversion\":\"npm run build:node && npm run test\",\"version\":\"npm run build && git add .\",\"postversion\":\"git push && git push --tags && npm publish\",\"demo\":\"node ./test/demo/index.node.js\"},\"bugs\":\"https://github.com/pc/pc-tracking.js/issues\",\"author\":\"PC IO <team@pc.io> (https://pc.io/)\",\"homepage\":\"https://pc.io\",\"keywords\":[\"Tracking\",\"Tracker\",\"Event Tracker\",\"Event tracking\",\"Track events\",\"Page tracking\",\"User tracking\",\"Analytics event tracking\",\"Analytics events\",\"Analytics tracking\",\"Custom events\",\"Analytics\",\"Stats\",\"Statistics\",\"Monitoring\",\"Metrics\",\"Pageviews\",\"Segmentation\",\"Funnel\",\"Conversion\",\"Log\",\"Logger\",\"Logging\",\"Javascript events\",\"Universal tracking\",\"Click analytics\"],\"contributors\":[\"Dustin Larimer <dustin@keen.io> (https://github.com/dustinlarimer)\",\"Eric Anderson <eric@keen.io> (https://github.com/aroc)\",\"Joe Wegner <joe@keen.io> (http://www.wegnerdesign.com)\",\"Alex Kleissner <alex@keen.io> (https://github.com/hex337)\",\"Adam Kasprowicz <adam.kasprowicz@keen.io> (https://github.com/adamkasprowicz)\",\"Dariusz Łacheta <dariusz.lacheta@keen.io> (https://github.com/dariuszlacheta)\"],\"license\":\"MIT\",\"dependencies\":{\"component-emitter\":\"^1.2.0\",\"js-cookie\":\"2.1.0\",\"promise-polyfill\":\"^8.0.0\",\"whatwg-fetch\":\"^2.0.4\"},\"devDependencies\":{\"babel-core\":\"^6.26.3\",\"babel-jest\":\"^23.0.1\",\"babel-loader\":\"^7.1.5\",\"babel-plugin-transform-es2015-modules-commonjs\":\"^6.26.2\",\"babel-plugin-transform-object-rest-spread\":\"^6.26.0\",\"babel-polyfill\":\"^6.26.0\",\"babel-preset-env\":\"^1.7.0\",\"babel-preset-es2015\":\"^6.24.1\",\"babel-preset-stage-0\":\"^6.24.1\",\"eslint\":\"^4.19.1\",\"eslint-config-airbnb\":\"^16.1.0\",\"eslint-loader\":\"^2.0.0\",\"eslint-plugin-import\":\"^2.11.0\",\"eslint-plugin-jsx-a11y\":\"^6.0.3\",\"html-loader\":\"^0.5.5\",\"html-webpack-plugin\":\"^3.2.0\",\"jest\":\"^22.4.3\",\"jest-fetch-mock\":\"^1.6.5\",\"merge\":\"^1.2.1\",\"nock\":\"^9.2.6\",\"regenerator-runtime\":\"^0.11.1\",\"replace-in-file\":\"^3.4.0\",\"url-parse\":\"^1.4.3\",\"webpack\":\"^4.5.0\",\"webpack-bundle-analyzer\":\"^3.3.2\",\"webpack-cli\":\"^3.1.1\",\"webpack-dev-server\":\"^3.11.0\",\"xhr-mock\":\"^2.3.2\"},\"optionalDependencies\":{\"fsevents\":\"^1.2.9\"}}");
+module.exports = JSON.parse("{\"name\":\"pc-tracking\",\"version\":\"4.7.0\",\"description\":\"Track events - custom user actions, clicks, pageviews, purchases.\",\"main\":\"dist/node/pc-tracking.js\",\"browser\":\"dist/pc-tracking.js\",\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/pc/pc-tracking.js.git\"},\"scripts\":{\"start\":\"NODE_ENV=development webpack-dev-server\",\"test\":\"NODE_ENV=test jest && npm run test:node\",\"test:node\":\"NODE_ENV=test TEST_ENV=node jest\",\"test:watch\":\"NODE_ENV=test jest --watch\",\"test:node:watch\":\"NODE_ENV=test TEST_ENV=node jest --watch\",\"build\":\"NODE_ENV=production webpack -p && NODE_ENV=production OPTIMIZE_MINIMIZE=1 webpack -p && npm run build:node\",\"build:node\":\"TARGET=node NODE_ENV=production webpack -p\",\"profile\":\"webpack --profile --json > stats.json\",\"analyze\":\"webpack-bundle-analyzer stats.json /dist\",\"preversion\":\"npm run build:node && npm run test\",\"version\":\"npm run build && git add .\",\"postversion\":\"git push && git push --tags && npm publish\",\"demo\":\"node ./test/demo/index.node.js\"},\"bugs\":\"https://github.com/pc/pc-tracking.js/issues\",\"author\":\"PC IO <team@pc.io> (https://pc.io/)\",\"homepage\":\"https://pc.io\",\"keywords\":[\"Tracking\",\"Tracker\",\"Event Tracker\",\"Event tracking\",\"Track events\",\"Page tracking\",\"User tracking\",\"Analytics event tracking\",\"Analytics events\",\"Analytics tracking\",\"Custom events\",\"Analytics\",\"Stats\",\"Statistics\",\"Monitoring\",\"Metrics\",\"Pageviews\",\"Segmentation\",\"Funnel\",\"Conversion\",\"Log\",\"Logger\",\"Logging\",\"Javascript events\",\"Universal tracking\",\"Click analytics\"],\"contributors\":[\"Dustin Larimer <dustin@keen.io> (https://github.com/dustinlarimer)\",\"Eric Anderson <eric@keen.io> (https://github.com/aroc)\",\"Joe Wegner <joe@keen.io> (http://www.wegnerdesign.com)\",\"Alex Kleissner <alex@keen.io> (https://github.com/hex337)\",\"Adam Kasprowicz <adam.kasprowicz@keen.io> (https://github.com/adamkasprowicz)\",\"Dariusz Łacheta <dariusz.lacheta@keen.io> (https://github.com/dariuszlacheta)\"],\"license\":\"MIT\",\"dependencies\":{\"component-emitter\":\"^1.2.0\",\"js-cookie\":\"2.1.0\",\"promise-polyfill\":\"^8.0.0\",\"whatwg-fetch\":\"^2.0.4\"},\"devDependencies\":{\"babel-core\":\"^6.26.3\",\"babel-jest\":\"^23.0.1\",\"babel-loader\":\"^7.1.5\",\"babel-plugin-transform-es2015-modules-commonjs\":\"^6.26.2\",\"babel-plugin-transform-object-rest-spread\":\"^6.26.0\",\"babel-polyfill\":\"^6.26.0\",\"babel-preset-env\":\"^1.7.0\",\"babel-preset-es2015\":\"^6.24.1\",\"babel-preset-stage-0\":\"^6.24.1\",\"eslint\":\"^4.19.1\",\"eslint-config-airbnb\":\"^16.1.0\",\"eslint-loader\":\"^2.0.0\",\"eslint-plugin-import\":\"^2.11.0\",\"eslint-plugin-jsx-a11y\":\"^6.0.3\",\"html-loader\":\"^0.5.5\",\"html-webpack-plugin\":\"^3.2.0\",\"jest\":\"^22.4.3\",\"jest-fetch-mock\":\"^1.6.5\",\"merge\":\"^1.2.1\",\"nock\":\"^9.2.6\",\"regenerator-runtime\":\"^0.11.1\",\"replace-in-file\":\"^3.4.0\",\"url-parse\":\"^1.4.3\",\"webpack\":\"^4.5.0\",\"webpack-bundle-analyzer\":\"^3.3.2\",\"webpack-cli\":\"^3.1.1\",\"webpack-dev-server\":\"^3.11.0\",\"xhr-mock\":\"^2.3.2\"},\"optionalDependencies\":{\"fsevents\":\"^1.2.9\"}}");
 
 /***/ }),
 /* 9 */
@@ -1700,17 +1700,19 @@ var _getScrollState = __webpack_require__(40);
 
 var _getURLParams = __webpack_require__(41);
 
-var _getUniqueId = __webpack_require__(42);
+var _getUTMObject = __webpack_require__(42);
+
+var _getUniqueId = __webpack_require__(43);
 
 var _getWindowProfile = __webpack_require__(17);
 
-var _cookie = __webpack_require__(43);
+var _cookie = __webpack_require__(44);
 
 var _deepExtend = __webpack_require__(14);
 
-var _serializeForm = __webpack_require__(45);
+var _serializeForm = __webpack_require__(46);
 
-var _timer = __webpack_require__(46);
+var _timer = __webpack_require__(47);
 
 var _optOut = __webpack_require__(11);
 
@@ -1760,6 +1762,7 @@ var initAutoTracking = (0, _browserAutoTracking.initAutoTrackingCore)(_index2.de
   getScrollState: _getScrollState.getScrollState,
   getUniqueId: _getUniqueId.getUniqueId,
   getURLParams: _getURLParams.getURLParams,
+  getUTMObject: _getUTMObject.getUTMObject,
   getWindowProfile: _getWindowProfile.getWindowProfile
 });
 
@@ -3688,6 +3691,8 @@ var _package2 = _interopRequireDefault(_package);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
 function initAutoTrackingCore(lib) {
   return function (obj) {
     var client = this;
@@ -3787,28 +3792,19 @@ function initAutoTrackingCore(lib) {
         cookie.set('initialLandingPage', initialLandingPage, cookieDomain);
       }
 
-      var latestUTM = cookie.get('latestUTM');
-      if (window.location.search.toLowerCase().indexOf('utm_campaign') > -1) {
+      var initialUTM = cookie.get('latestUTM');
+      if (!initialUTM) {
         var query = window.location.search.slice(1).toLowerCase();
         var params = helpers.getURLParams(query);
-        var _params$utm_source = params.utm_source,
-            utm_source = _params$utm_source === undefined ? null : _params$utm_source,
-            _params$utm_medium = params.utm_medium,
-            utm_medium = _params$utm_medium === undefined ? null : _params$utm_medium,
-            _params$utm_campaign = params.utm_campaign,
-            utm_campaign = _params$utm_campaign === undefined ? null : _params$utm_campaign,
-            _params$utm_term = params.utm_term,
-            utm_term = _params$utm_term === undefined ? null : _params$utm_term,
-            _params$utm_content = params.utm_content,
-            utm_content = _params$utm_content === undefined ? null : _params$utm_content;
+        initialUTM = helpers.getUTMObject(params);
+        cookie.set('latestUTM', initialUTM, cookieDomain);
+      }
 
-        latestUTM = {
-          utm_source: utm_source,
-          utm_campaign: utm_campaign,
-          utm_medium: utm_medium,
-          utm_term: utm_term,
-          utm_content: utm_content
-        };
+      var latestUTM = cookie.get('latestUTM');
+      if (window.location.search.toLowerCase().indexOf('utm_campaign') > -1) {
+        var _query = window.location.search.slice(1).toLowerCase();
+        var _params = helpers.getURLParams(_query);
+        latestUTM = helpers.getUTMObject(_params);
         cookie.set('latestUTM', latestUTM, cookieDomain);
       }
 
@@ -3819,6 +3815,18 @@ function initAutoTrackingCore(lib) {
           scrollState = helpers.getScrollState(scrollState);
         });
       }
+
+      var dataLayer = window.dataLayer && window.dataLayer.length > 0 ? window.dataLayer[0] : {};
+
+      var _dataLayer$property = dataLayer.property,
+          property = _dataLayer$property === undefined ? null : _dataLayer$property,
+          _dataLayer$status = dataLayer.status,
+          status = _dataLayer$status === undefined ? null : _dataLayer$status,
+          _dataLayer$pageName = dataLayer.pageName,
+          pageName = _dataLayer$pageName === undefined ? null : _dataLayer$pageName,
+          _objectWithoutPropert = _objectWithoutProperties(dataLayer, ['property', 'status', 'pageName']),
+          _objectWithoutPropert2 = _objectWithoutPropert,
+          meta = _objectWithoutPropert2 === undefined ? {} : _objectWithoutPropert2;
 
       client.extendEvents(function () {
         var browserProfile = helpers.getBrowserProfile();
@@ -3833,6 +3841,10 @@ function initAutoTrackingCore(lib) {
             title: document ? document.title : null,
             description: browserProfile.description,
             scroll_state: scrollState,
+            site_type: property,
+            site_status: status,
+            page_name: pageName,
+            page_meta: meta,
             time_on_page: allTimeOnSiteS > 0 ? allTimeOnSiteS : getSecondsSinceDate(now),
             time_on_page_ms: allTimeOnSiteMS > 0 ? allTimeOnSiteMS : getMiliSecondsSinceDate(now)
           },
@@ -3849,8 +3861,9 @@ function initAutoTrackingCore(lib) {
             qs: window ? window.location.search : ''
           },
           funnel: {
-            latest_utm: latestUTM,
-            initial_landing_page: initialLandingPage
+            initial_landing_page: initialLandingPage,
+            initial_utm: initialUTM,
+            latest_utm: latestUTM
           },
           referrer: {
             initial: initialReferrer,
@@ -4001,8 +4014,8 @@ function initAutoTrackingCore(lib) {
             });
           };
           var observer = new IntersectionObserver(elementViewsCallback, elementViewsOptions);
-          var target = document.querySelectorAll('.track-element-view');
-          target.forEach(function (el) {
+          var _target = document.querySelectorAll('.track-element-view');
+          _target.forEach(function (el) {
             observer.observe(el);
           });
           client.observers.IntersectionObserver = observer;
@@ -4286,6 +4299,37 @@ var getURLParams = exports.getURLParams = function getURLParams(search) {
 
 
 Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var getUTMObject = exports.getUTMObject = function getUTMObject(params) {
+    var _params$utm_source = params.utm_source,
+        utm_source = _params$utm_source === undefined ? null : _params$utm_source,
+        _params$utm_medium = params.utm_medium,
+        utm_medium = _params$utm_medium === undefined ? null : _params$utm_medium,
+        _params$utm_campaign = params.utm_campaign,
+        utm_campaign = _params$utm_campaign === undefined ? null : _params$utm_campaign,
+        _params$utm_term = params.utm_term,
+        utm_term = _params$utm_term === undefined ? null : _params$utm_term,
+        _params$utm_content = params.utm_content,
+        utm_content = _params$utm_content === undefined ? null : _params$utm_content;
+
+    return {
+        utm_source: utm_source,
+        utm_campaign: utm_campaign,
+        utm_medium: utm_medium,
+        utm_term: utm_term,
+        utm_content: utm_content
+    };
+};
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.getUniqueId = getUniqueId;
@@ -4308,7 +4352,7 @@ function getUniqueId() {
 }
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4321,7 +4365,7 @@ exports.cookie = undefined;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _jsCookie = __webpack_require__(44);
+var _jsCookie = __webpack_require__(45);
 
 var _jsCookie2 = _interopRequireDefault(_jsCookie);
 
@@ -4392,7 +4436,7 @@ cookie.prototype.enabled = function () {
 };
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -4538,7 +4582,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4804,7 +4848,7 @@ function str_serialize(result, key, value) {
 }
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
