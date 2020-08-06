@@ -3792,12 +3792,12 @@ function initAutoTrackingCore(lib) {
         cookie.set('initialLandingPage', initialLandingPage, cookieDomain);
       }
 
-      var initialUTM = cookie.get('latestUTM');
+      var initialUTM = cookie.get('initialUTM');
       if (!initialUTM) {
         var query = window.location.search.slice(1).toLowerCase();
         var params = helpers.getURLParams(query);
         initialUTM = helpers.getUTMObject(params);
-        cookie.set('latestUTM', initialUTM, cookieDomain);
+        cookie.set('initialUTM', initialUTM, cookieDomain);
       }
 
       var latestUTM = cookie.get('latestUTM');
